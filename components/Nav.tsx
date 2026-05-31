@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -10,7 +11,7 @@ const navLinks = [
 export default function Nav() {
   return (
     <header className="w-full border-b border-border/50">
-      <nav className="max-w-[680px] mx-auto px-4 py-4 flex items-center justify-between">
+      <nav className="max-w-170 mx-auto px-4 py-4 flex items-center justify-between">
         <Link
           href="/"
           className="font-mono text-foreground font-semibold tracking-tight hover:text-accent transition-colors"
@@ -27,6 +28,7 @@ export default function Nav() {
               {link.label}
             </Link>
           ))}
+          <ThemeToggle />
           <a
             href="https://github.com/milliyin"
             target="_blank"

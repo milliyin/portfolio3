@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import ThemeProvider from "@/components/ThemeProvider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -65,11 +66,13 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
       <body className="min-h-screen flex flex-col bg-background text-foreground antialiased">
-        <Nav />
-        <main className="flex-1 w-full max-w-[680px] mx-auto px-4 py-10">
-          {children}
-        </main>
-        <Footer />
+        <ThemeProvider>
+          <Nav />
+          <main className="flex-1 w-full max-w-170 mx-auto px-4 py-10">
+            {children}
+          </main>
+          <Footer />
+        </ThemeProvider>
         <Analytics />
         <SpeedInsights />
       </body>
