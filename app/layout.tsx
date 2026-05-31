@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://milliyin.dev"),
+  metadataBase: new URL("https://www.milliyin.dev"),
   title: {
     default: "milliyin — AI Engineer & Developer",
     template: "%s | milliyin",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     title: "milliyin — AI Engineer & Developer",
     description:
       "Muhammad Illiyin Ashraf — AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, agentic systems.",
-    url: "https://milliyin.dev",
+    url: "https://www.milliyin.dev",
     siteName: "milliyin",
     images: [{ url: "/syakir.webp", width: 1200, height: 630, alt: "milliyin" }],
     locale: "en_US",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
     },
   },
-  authors: [{ name: "Muhammad Illiyin Ashraf", url: "https://milliyin.dev" }],
+  authors: [{ name: "Muhammad Illiyin Ashraf", url: "https://www.milliyin.dev" }],
   creator: "Muhammad Illiyin Ashraf",
 };
 

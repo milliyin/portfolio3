@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: "Projects",
   description:
     "Open-source and freelance projects by Muhammad Illiyin Ashraf — ML systems, AI agents, and full-stack apps.",
-  alternates: { canonical: "https://milliyin.dev/projects" },
+  alternates: { canonical: "https://www.milliyin.dev/projects" },
   openGraph: {
     title: "Projects | milliyin",
     description:
       "Open-source and freelance projects by Muhammad Illiyin Ashraf — ML systems, AI agents, and full-stack apps.",
-    url: "https://milliyin.dev/projects",
+    url: "https://www.milliyin.dev/projects",
     images: [{ url: "/syakir.webp", width: 1200, height: 630 }],
   },
   twitter: {

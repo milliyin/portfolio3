@@ -38,7 +38,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/_next/"],
       },
     ],
-    sitemap: "https://milliyin.dev/sitemap.xml",
-    host: "https://milliyin.dev",
+    sitemap: "https://www.milliyin.dev/sitemap.xml",
+    host: "https://www.milliyin.dev",
   };
 }

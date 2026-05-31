@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: "Posts",
   description:
     "Writing on AI/ML engineering, Python, developer tools, and building real-world machine learning systems.",
-  alternates: { canonical: "https://milliyin.dev/posts" },
+  alternates: { canonical: "https://www.milliyin.dev/posts" },
   openGraph: {
     title: "Posts | milliyin",
     description:
       "Writing on AI/ML engineering, Python, developer tools, and building real-world machine learning systems.",
-    url: "https://milliyin.dev/posts",
+    url: "https://www.milliyin.dev/posts",
     images: [{ url: "/syakir.webp", width: 1200, height: 630 }],
   },
   twitter: {

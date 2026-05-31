@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "Privacy Policy for milliyin.dev",
-  alternates: { canonical: "https://milliyin.dev/privacy-policy" },
+  alternates: { canonical: "https://www.milliyin.dev/privacy-policy" },
 };
 
 export default function PrivacyPolicyPage() {

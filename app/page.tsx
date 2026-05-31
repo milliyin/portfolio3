@@ -8,7 +8,7 @@ import ProjectCard from "@/components/ProjectCard";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  alternates: { canonical: "https://milliyin.dev" },
+  alternates: { canonical: "https://www.milliyin.dev" },
 };
 
 const TECH_BADGES = [
@@ -25,7 +25,7 @@ const PERSON_LD = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Muhammad Illiyin Ashraf",
-  url: "https://milliyin.dev",
+  url: "https://www.milliyin.dev",
   jobTitle: "AI/ML Engineer",
   description:
     "Developer & AI Engineer from Pakistan. NLP, computer vision, generative AI, agentic systems.",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description: "Terms of Service for milliyin.dev",
-  alternates: { canonical: "https://milliyin.dev/terms-of-service" },
+  alternates: { canonical: "https://www.milliyin.dev/terms-of-service" },
 };
 
 export default function TermsPage() {

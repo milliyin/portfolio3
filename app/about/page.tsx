@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "Muhammad Illiyin Ashraf — AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, and autonomous agent systems.",
-  alternates: { canonical: "https://milliyin.dev/about" },
+  alternates: { canonical: "https://www.milliyin.dev/about" },
   openGraph: {
     title: "About | milliyin",
     description:
       "Muhammad Illiyin Ashraf — AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, and autonomous agent systems.",
-    url: "https://milliyin.dev/about",
+    url: "https://www.milliyin.dev/about",
     images: [{ url: "/syakir.webp", width: 1200, height: 630 }],
   },
   twitter: {
