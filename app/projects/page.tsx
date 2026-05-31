@@ -12,6 +12,14 @@ export const metadata: Metadata = {
     description:
       "Open-source and freelance projects by Muhammad Illiyin Ashraf — ML systems, AI agents, and full-stack apps.",
     url: "https://milliyin.dev/projects",
+    images: [{ url: "/syakir.webp", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Projects | milliyin",
+    description:
+      "Open-source and freelance projects by Muhammad Illiyin Ashraf — ML systems, AI agents, and full-stack apps.",
+    images: ["/syakir.webp"],
   },
 };
 

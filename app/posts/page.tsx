@@ -12,6 +12,14 @@ export const metadata: Metadata = {
     description:
       "Writing on AI/ML engineering, Python, developer tools, and building real-world machine learning systems.",
     url: "https://milliyin.dev/posts",
+    images: [{ url: "/syakir.webp", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Posts | milliyin",
+    description:
+      "Writing on AI/ML engineering, Python, developer tools, and building real-world machine learning systems.",
+    images: ["/syakir.webp"],
   },
 };
 

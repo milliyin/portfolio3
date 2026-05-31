@@ -12,6 +12,14 @@ export const metadata: Metadata = {
     description:
       "Muhammad Illiyin Ashraf — AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, and autonomous agent systems.",
     url: "https://milliyin.dev/about",
+    images: [{ url: "/syakir.webp", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About | milliyin",
+    description:
+      "Muhammad Illiyin Ashraf — AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, and autonomous agent systems.",
+    images: ["/syakir.webp"],
   },
 };
 

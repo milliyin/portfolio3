@@ -24,6 +24,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `Posts tagged "${label}" | milliyin`,
       url: `https://milliyin.dev/tags/${tag}`,
+      images: [{ url: "/syakir.webp", width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Posts tagged "${label}" | milliyin`,
+      images: ["/syakir.webp"],
     },
   };
 }
