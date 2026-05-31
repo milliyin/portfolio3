@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getAllPosts } from "@/lib/posts";
 import { projects } from "@/content/projects";
+import { jsonLd } from "@/lib/jsonld";
 import PostCard from "@/components/PostCard";
 import ProjectCard from "@/components/ProjectCard";
 import type { Metadata } from "next";
@@ -43,7 +44,7 @@ export default function HomePage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(PERSON_LD) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(PERSON_LD) }}
       />
 
       {/* Hero */}

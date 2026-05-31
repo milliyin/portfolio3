@@ -1,11 +1,10 @@
 import type { MetadataRoute } from "next";
-import { getAllPosts, getAllTags } from "@/lib/posts";
+import { getAllPosts } from "@/lib/posts";
 
 const BASE = "https://milliyin.dev";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts();
-  const tags = getAllTags(posts);
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -41,14 +40,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const tagRoutes: MetadataRoute.Sitemap = tags.map((tag) => ({
-    url: `${BASE}/tags/${encodeURIComponent(
-      tag.toLowerCase().replace(/\s+/g, "-")
-    )}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: 0.5,
-  }));
-
-  return [...staticRoutes, ...postRoutes, ...tagRoutes];
+  return [...staticRoutes, ...postRoutes];
 }

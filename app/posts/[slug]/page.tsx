@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
+import { jsonLd } from "@/lib/jsonld";
 import MDXContent from "@/components/MDXContent";
 import TagPill from "@/components/TagPill";
 import type { Metadata } from "next";
@@ -70,7 +71,7 @@ export default async function PostPage({ params }: Props) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(articleLd) }}
       />
 
       <article>

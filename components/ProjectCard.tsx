@@ -57,7 +57,7 @@ export default function ProjectCard({
       {tags.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-1.5">
           {tags.map((tag) => (
-            <TagPill key={tag} tag={tag} linked={false} />
+            <TagPill key={tag} tag={tag} />
           ))}
         </div>
       )}
