@@ -21,11 +21,16 @@
   border-color: var(--color-border);
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans);
   line-height: 1.7;
+  overflow-x: hidden;
 }
 
 ::selection {
@@ -37,6 +42,7 @@ body {
 .prose {
   color: var(--color-foreground);
   max-width: none;
+  overflow-x: hidden;
 }
 
 .prose h1,
