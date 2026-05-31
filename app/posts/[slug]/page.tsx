@@ -1,0 +1,97 @@
+import { notFound } from "next/navigation";
+import { getAllPosts, getPostBySlug } from "@/lib/posts";
+import MDXContent from "@/components/MDXContent";
+import TagPill from "@/components/TagPill";
+import type { Metadata } from "next";
+
+type Props = { params: Promise<{ slug: string }> };
+
+export async function generateStaticParams() {
+  return getAllPosts().map((post) => ({ slug: post.slug }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
+  if (!post) return {};
+
+  return {
+    title: post.title,
+    description: post.description,
+    alternates: { canonical: `https://milliyin.dev/posts/${slug}` },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      url: `https://milliyin.dev/posts/${slug}`,
+      images: [{ url: "/syakir.webp", width: 1200, height: 630 }],
+      type: "article",
+      publishedTime: post.date,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: ["/syakir.webp"],
+    },
+  };
+}
+
+export default async function PostPage({ params }: Props) {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
+  if (!post) notFound();
+
+  const articleLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    url: `https://milliyin.dev/posts/${slug}`,
+    author: {
+      "@type": "Person",
+      name: "Muhammad Illiyin Ashraf",
+      url: "https://milliyin.dev",
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Muhammad Illiyin Ashraf",
+      url: "https://milliyin.dev",
+    },
+  };
+
+  const formatted = new Date(post.date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }}
+      />
+
+      <article>
+        <header className="mb-8">
+          <h1 className="text-2xl font-semibold tracking-tight leading-snug text-foreground mb-3">
+            {post.title}
+          </h1>
+          <div className="flex flex-wrap items-center gap-3 mb-3">
+            <time className="text-sm text-muted font-mono">{formatted}</time>
+          </div>
+          {post.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {post.tags.map((tag) => (
+                <TagPill key={tag} tag={tag} />
+              ))}
+            </div>
+          )}
+        </header>
+
+        <MDXContent source={post.content} />
+      </article>
+    </>
+  );
+}

@@ -1,0 +1,117 @@
+---
+title: "Building a Gradio Frontend Without Exposing Model Weights"
+date: "2025-08-15"
+tags: ["Gradio", "AI", "Deployment", "Security"]
+description: "A secure architecture for serving AI models via Gradio without leaking model weights or internal logic."
+---
+
+## Introduction
+
+When deploying machine learning models on the web, it's often essential to keep model weights private — especially when dealing with proprietary or large models like diffusion generators or commercial segmentation tools. This post explores how I built a Gradio frontend that interacts with a secure backend API, while hiding all model logic and weights from the user.
+
+## Why Hide the Weights?
+
+In typical Gradio apps, models are often hosted together with the interface, which means:
+
+- Users can inspect model files if hosted publicly.
+- Heavier models slow down the UI.
+- It's harder to scale compute across machines.
+
+To solve this, I decoupled the **frontend interface** and the **inference backend**.
+
+## How It Works
+
+I implemented a client-server architecture:
+
+**Frontend (Gradio UI):**
+- Users upload an image and select options.
+- Requests are added to a queue.
+- UI checks the status periodically until results are ready.
+
+**Backend (API Server):**
+- Receives requests via Hugging Face's `gradio_client`.
+- Processes one request at a time (ideal for GPU-heavy tasks).
+- Returns base64-encoded results to the frontend.
+
+## Queue-Based Request System
+
+Since the GPU backend can only handle one request at a time, I used a queue system to:
+
+- Handle multiple concurrent users.
+- Provide estimated wait times.
+- Prevent overload and timeouts.
+
+Every request receives a `request_id`, queue position, and estimated wait time. Once processed, the UI displays the output.
+
+## Sample Workflow
+
+1. User uploads a photo and selects preferences.
+2. The app encodes the image in base64 and submits it to the backend.
+3. The backend runs inference and returns two output images: an overlay (e.g., object mask) and a final rendered background.
+4. The frontend updates the UI and shows results.
+
+Here's a simplified version of the API function on the backend:
+
+```python
+def predict_api(image_b64: str, category: str, gender: str):
+    # Actual model inference happens here — hidden from user
+    overlay_img = run_segmentation_model(image_b64)
+    bg_img = generate_background(category, gender)
+    return image_b64, to_b64(overlay_img), to_b64(bg_img), "✅ Done"
+```
+
+The frontend polls the `request_id` status every 2 seconds until completion.
+
+## Frontend Polling Pattern
+
+```python
+import gradio as gr
+import requests
+import time
+
+def submit_and_poll(image, category, gender):
+    # Submit to queue
+    resp = requests.post(BACKEND_URL + "/queue", json={
+        "image": encode_b64(image),
+        "category": category,
+        "gender": gender
+    })
+    request_id = resp.json()["request_id"]
+
+    # Poll until done
+    while True:
+        status = requests.get(f"{BACKEND_URL}/status/{request_id}").json()
+        if status["done"]:
+            return status["overlay"], status["background"]
+        time.sleep(2)
+
+demo = gr.Interface(
+    fn=submit_and_poll,
+    inputs=[gr.Image(), gr.Dropdown(["casual", "formal"]), gr.Radio(["male", "female"])],
+    outputs=[gr.Image(label="Overlay"), gr.Image(label="Result")]
+)
+demo.launch()
+```
+
+## Benefits of This Setup
+
+**Security** — Your model and logic stay hidden on the server.
+
+**Scalability** — You can deploy the backend on a stronger machine or GPU instance without touching the frontend.
+
+**Modularity** — Swap or upgrade models without changing the frontend. Users never know what's running on the other side.
+
+**Queue Control** — Manage compute usage, prioritize jobs, and prevent server crashes from concurrent heavy requests.
+
+## When to Use This Pattern
+
+This architecture is ideal for:
+
+- **Commercial AI tools** where model IP must be protected
+- **Diffusion or segmentation models** that are too large to host alongside the UI
+- **Multi-tenant deployments** where you want to rate-limit per user
+- **Protected ML workflows** in enterprise environments
+
+## Conclusion
+
+By separating the Gradio interface from the model backend and implementing a queue, I was able to build a secure, scalable, and user-friendly AI tool without ever exposing the model weights. The key insight is that Gradio doesn't have to be monolithic — it works just as well as a thin client talking to a hardened backend.

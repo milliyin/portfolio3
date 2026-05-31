@@ -1,0 +1,106 @@
+---
+title: "Fine-Tuning EfficientNet-B0 for Painting Style Classification"
+date: "2025-08-15"
+tags: ["PyTorch", "Computer Vision", "Image Classification", "EfficientNet"]
+description: "How I fine-tuned EfficientNet-B0 on a painting dataset to classify artistic styles with high accuracy."
+---
+
+## Introduction
+
+I fine-tuned **EfficientNet-B0** to classify artworks into **9 painting styles** using the Hugging Face dataset `keremberke/painting-style-classification`. The aim was to build a fully custom PyTorch training pipeline — covering dataset preparation, augmentation, transfer learning, and evaluation — to understand both what works and what limits accuracy for this task.
+
+Model card: [milliyin/painting-style-classification](https://huggingface.co/milliyin/painting-style-classification)
+
+## Dataset Preparation
+
+The full dataset was downloaded directly from Hugging Face in ZIP format for train, validation, and test splits. Folder structure:
+
+```
+dataset/
+  images/train
+  images/validation
+  images/test
+  jsonl/train.jsonl
+  jsonl/validation.jsonl
+  jsonl/test.jsonl
+```
+
+Images were extracted, renamed with zero-padded IDs, and assigned numeric labels based on their original folder names (e.g., `baroque` → 4, `renaissance` → 5, `surrealism` → 8). I generated `.jsonl` files containing metadata for each split and implemented a custom dataset loader (`FolderDataset`) that reads these JSONLs and can access splits like `dataset['train']`. A second wrapper (`PaintingDataset`) applied transforms and returned `(image, label)` pairs for PyTorch.
+
+## Data Augmentation
+
+For **training**:
+
+- Resize to 224×224 (EfficientNet-B0 input size)
+- Random horizontal flip (50% probability)
+- Random rotation up to 15°
+- Color jitter (brightness, contrast, saturation, hue)
+- Random affine translation
+- Normalization to ImageNet stats
+
+For **validation** and **test**: only resizing and normalization.
+
+## Model Architecture
+
+Started from `torchvision.models.efficientnet_b0` with ImageNet pretrained weights. The final classifier layer was replaced with:
+
+- Dropout (0.2)
+- Fully-connected layer to 9 output classes
+
+## Transfer Learning Strategy
+
+All layers up to ~layer 100 were frozen at the start to speed up convergence and avoid catastrophic forgetting. Gradual unfreezing:
+
+- Epoch 10: freeze_until_layer=50
+- Epoch 20: unfreeze all layers for full fine-tuning
+
+This step-wise approach allowed the classifier head to adapt first before updating earlier convolutional blocks.
+
+## Training Setup
+
+```python
+criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
+optimizer = torch.optim.AdamW(model.parameters(), lr=1e-4, weight_decay=0.01)
+scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=5)
+```
+
+- **Batch size:** 32
+- **Epochs:** 50
+- **Device:** CUDA
+
+The training loop tracked train loss/accuracy and validation loss/accuracy each epoch. If validation accuracy improved, the model was saved as `best_efficientnet_b0.pth`.
+
+## Evaluation & Results
+
+Best validation accuracy achieved:
+
+**60.15% after 50 epochs**
+
+I also generated a classification report and plotted loss/accuracy curves to analyze overfitting patterns. Inference was tested on individual images with top-1 predicted style and confidence score.
+
+## Why Did It Plateau Around ~60%?
+
+1. **High Inter-Class Similarity** — Certain styles (e.g., Romanticism vs. Realism) share strong visual overlap.
+2. **Label Noise** — Open datasets may have inconsistent labels.
+3. **Data Imbalance** — Some styles had fewer samples, causing uneven learning.
+4. **Limited Early Unfreezing** — Freezing many layers for too long limited domain adaptation from natural photos to paintings.
+5. **Moderate Augmentation** — Could be stronger to handle variations in scan quality, lighting, and framing.
+6. **Model Size** — EfficientNet-B0 is compact; larger backbones may better capture fine texture differences.
+
+## How to Improve
+
+- **Earlier & Gradual Unfreezing** — Allow backbone adaptation sooner.
+- **Stronger Augmentations** — Use RandAugment, CutMix, Mixup, or color-space perturbations.
+- **Class-Balanced Sampling** — Reduce bias toward majority classes.
+- **Bigger Backbone** — Try EfficientNet-B2/B3, ConvNeXt-Tiny, or ViT models.
+- **Curated Splits** — Avoid artist overlap between train/validation to measure generalization accurately.
+- **TTA & Ensembling** — Small accuracy gains from combining predictions.
+
+## Code Link
+
+Complete training pipeline, dataset processing, and fine-tuning notebook:  
+[painting-style-classification-finetune/finetune.ipynb](https://github.com/milliyin/painting-style-classification-finetune/blob/main/finetune.ipynb)
+
+## Conclusion
+
+This project provided a hands-on look at training image classification models for nuanced visual categories like art styles. With a solid baseline at ~60% validation accuracy, there's plenty of room to iterate — particularly on augmentation, layer unfreezing, and backbone scaling — to push well beyond this mark.
