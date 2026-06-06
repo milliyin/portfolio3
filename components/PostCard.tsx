@@ -26,6 +26,7 @@ export default function PostCard({ slug, title, date, tags, description }: Props
       <h2 className="mt-1 text-base font-semibold leading-snug tracking-tight">
         <Link
           href={`/posts/${slug}`}
+          prefetch={false}
           className="text-foreground hover:text-accent transition-colors underline-offset-2 hover:underline"
         >
           {title}
