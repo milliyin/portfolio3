@@ -8,6 +8,8 @@ import ProjectCard from "@/components/ProjectCard";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  title: "AI/ML Engineer Building Real-World Solutions",
+  description: "Build NLP classifiers, computer vision systems, generative AI pipelines, and autonomous agents. Freelance AI engineer specializing in production ML systems.",
   alternates: { canonical: "https://www.milliyin.dev" },
 };
 
@@ -60,10 +62,10 @@ export default function HomePage() {
           />
           <div>
             <h1 className="text-xl font-semibold tracking-tight text-foreground">
-              Muhammad Illiyin Ashraf
+              AI/ML Engineer Building Real-World Solutions
             </h1>
             <p className="text-muted text-sm mt-0.5">
-              Developer & AI Engineer · Pakistan
+              Muhammad Illiyin Ashraf · Pakistan
             </p>
           </div>
         </div>

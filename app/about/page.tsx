@@ -62,9 +62,9 @@ export default function AboutPage() {
         />
         <div className="pt-1">
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-            Muhammad Illiyin Ashraf
+            AI/ML Engineer — NLP, Computer Vision, Generative AI
           </h1>
-          <p className="text-muted mt-1">Developer & AI Engineer · Pakistan</p>
+          <p className="text-muted mt-1">Muhammad Illiyin Ashraf · Pakistan</p>
         </div>
       </div>
 
