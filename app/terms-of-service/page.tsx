@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: "How you can use milliyin.dev — content license, code samples, and liability.",
-  alternates: { canonical: "https://www.milliyin.dev/terms-of-service" },
+  description:
+    "How you can use milliyin.dev - content license, code samples, and liability.",
+  alternates: { canonical: `${SITE_URL}/terms-of-service` },
 };
 
 export default function TermsPage() {
@@ -38,7 +40,7 @@ export default function TermsPage() {
       <h2>No Warranties</h2>
       <p>
         Content on this site is provided &quot;as is&quot; without warranty of
-        any kind. Code examples are for educational purposes — test thoroughly
+        any kind. Code examples are for educational purposes - test thoroughly
         before using in production.
       </p>
 

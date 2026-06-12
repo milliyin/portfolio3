@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "How milliyin.dev handles your data — no tracking, no cookies, no personal info collected.",
-  alternates: { canonical: "https://www.milliyin.dev/privacy-policy" },
+  description:
+    "How milliyin.dev handles your data - no tracking, no cookies, no personal info collected.",
+  alternates: { canonical: `${SITE_URL}/privacy-policy` },
 };
 
 export default function PrivacyPolicyPage() {

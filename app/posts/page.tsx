@@ -1,22 +1,23 @@
 import { getAllPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Posts",
   description:
     "Writing on AI/ML engineering, Python, developer tools, and building real-world machine learning systems.",
-  alternates: { canonical: "https://www.milliyin.dev/posts" },
+  alternates: { canonical: `${SITE_URL}/posts` },
   openGraph: {
-    title: "Posts | milliyin",
+    title: `Posts | ${SITE_NAME}`,
     description:
       "Writing on AI/ML engineering, Python, developer tools, and building real-world machine learning systems.",
-    url: "https://www.milliyin.dev/posts",
+    url: `${SITE_URL}/posts`,
     images: [{ url: "/syakir.webp", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Posts | milliyin",
+    title: `Posts | ${SITE_NAME}`,
     description:
       "Writing on AI/ML engineering, Python, developer tools, and building real-world machine learning systems.",
     images: ["/syakir.webp"],

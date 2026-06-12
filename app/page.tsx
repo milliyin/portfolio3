@@ -3,14 +3,16 @@ import Image from "next/image";
 import { getAllPosts } from "@/lib/posts";
 import { projects } from "@/content/projects";
 import { jsonLd } from "@/lib/jsonld";
+import { SITE_AUTHOR, SITE_URL } from "@/lib/site";
 import PostCard from "@/components/PostCard";
 import ProjectCard from "@/components/ProjectCard";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "AI/ML Engineer Building Real-World Solutions",
-  description: "Build NLP classifiers, computer vision systems, generative AI pipelines, and autonomous agents. Freelance AI engineer specializing in production ML systems.",
-  alternates: { canonical: "https://www.milliyin.dev" },
+  description:
+    "Build NLP classifiers, computer vision systems, generative AI pipelines, and autonomous agents. Freelance AI engineer specializing in production ML systems.",
+  alternates: { canonical: SITE_URL },
 };
 
 const TECH_BADGES = [
@@ -26,8 +28,8 @@ const TECH_BADGES = [
 const PERSON_LD = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: "Muhammad Illiyin Ashraf",
-  url: "https://www.milliyin.dev",
+  name: SITE_AUTHOR,
+  url: SITE_URL,
   jobTitle: "AI/ML Engineer",
   description:
     "Developer & AI Engineer from Pakistan. NLP, computer vision, generative AI, agentic systems.",
@@ -49,7 +51,6 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: jsonLd(PERSON_LD) }}
       />
 
-      {/* Hero */}
       <section className="pt-6 pb-14">
         <div className="flex items-start gap-5 mb-6">
           <Image
@@ -65,13 +66,13 @@ export default function HomePage() {
               AI/ML Engineer Building Real-World Solutions
             </h1>
             <p className="text-muted text-sm mt-0.5">
-              Muhammad Illiyin Ashraf · Pakistan
+              Muhammad Illiyin Ashraf - Pakistan
             </p>
           </div>
         </div>
 
         <p className="text-foreground/90 leading-relaxed mb-5 max-w-150">
-          I build real-world ML solutions — NLP classifiers, computer vision
+          I build real-world ML solutions - NLP classifiers, computer vision
           systems, generative AI pipelines, and autonomous agents with MCP.
           Open for freelance.
         </p>
@@ -116,7 +117,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Recent Posts */}
       <section className="mb-14">
         <div className="flex items-center justify-between mb-1">
           <h2 className="text-sm font-semibold text-muted uppercase tracking-widest">
@@ -126,7 +126,7 @@ export default function HomePage() {
             href="/posts"
             className="text-xs text-accent hover:text-accent-hover transition-colors"
           >
-            All posts →
+            All posts -&gt;
           </Link>
         </div>
         <div>
@@ -143,7 +143,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Projects */}
       <section>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-sm font-semibold text-muted uppercase tracking-widest">
@@ -153,7 +152,7 @@ export default function HomePage() {
             href="/projects"
             className="text-xs text-accent hover:text-accent-hover transition-colors"
           >
-            All projects →
+            All projects -&gt;
           </Link>
         </div>
         <div className="flex flex-col gap-3">

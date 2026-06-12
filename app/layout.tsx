@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ThemeProvider from "@/components/ThemeProvider";
+import { SITE_AUTHOR, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -18,28 +19,28 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.milliyin.dev"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "milliyin — AI Engineer & Developer",
-    template: "%s | milliyin",
+    default: `${SITE_NAME} - AI Engineer & Developer`,
+    template: `%s | ${SITE_NAME}`,
   },
   description:
-    "Muhammad Illiyin Ashraf — AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, agentic systems.",
+    `${SITE_AUTHOR} - AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, agentic systems.`,
   openGraph: {
-    title: "milliyin — AI Engineer & Developer",
+    title: `${SITE_NAME} - AI Engineer & Developer`,
     description:
-      "Muhammad Illiyin Ashraf — AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, agentic systems.",
-    url: "https://www.milliyin.dev",
-    siteName: "milliyin",
-    images: [{ url: "/syakir.webp", width: 1200, height: 630, alt: "milliyin" }],
+      `${SITE_AUTHOR} - AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, agentic systems.`,
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    images: [{ url: "/syakir.webp", width: 1200, height: 630, alt: SITE_NAME }],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "milliyin — AI Engineer & Developer",
+    title: `${SITE_NAME} - AI Engineer & Developer`,
     description:
-      "Muhammad Illiyin Ashraf — AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, agentic systems.",
+      `${SITE_AUTHOR} - AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, agentic systems.`,
     images: ["/syakir.webp"],
   },
   robots: {
@@ -51,8 +52,8 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
     },
   },
-  authors: [{ name: "Muhammad Illiyin Ashraf", url: "https://www.milliyin.dev" }],
-  creator: "Muhammad Illiyin Ashraf",
+  authors: [{ name: SITE_AUTHOR, url: SITE_URL }],
+  creator: SITE_AUTHOR,
 };
 
 export default function RootLayout({

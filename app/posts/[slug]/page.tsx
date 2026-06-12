@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { jsonLd } from "@/lib/jsonld";
+import { SITE_AUTHOR, SITE_URL } from "@/lib/site";
 import MDXContent from "@/components/MDXContent";
 import TagPill from "@/components/TagPill";
 import type { Metadata } from "next";
@@ -19,11 +20,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: post.title,
     description: post.description,
-    alternates: { canonical: `https://milliyin.dev/posts/${slug}` },
+    alternates: { canonical: `${SITE_URL}/posts/${slug}` },
     openGraph: {
       title: post.title,
       description: post.description,
-      url: `https://milliyin.dev/posts/${slug}`,
+      url: `${SITE_URL}/posts/${slug}`,
       images: [{ url: "/syakir.webp", width: 1200, height: 630 }],
       type: "article",
       publishedTime: post.date,
@@ -48,16 +49,16 @@ export default async function PostPage({ params }: Props) {
     headline: post.title,
     description: post.description,
     datePublished: post.date,
-    url: `https://milliyin.dev/posts/${slug}`,
+    url: `${SITE_URL}/posts/${slug}`,
     author: {
       "@type": "Person",
-      name: "Muhammad Illiyin Ashraf",
-      url: "https://milliyin.dev",
+      name: SITE_AUTHOR,
+      url: SITE_URL,
     },
     publisher: {
       "@type": "Person",
-      name: "Muhammad Illiyin Ashraf",
-      url: "https://milliyin.dev",
+      name: SITE_AUTHOR,
+      url: SITE_URL,
     },
   };
 

@@ -1,24 +1,25 @@
 import Image from "next/image";
 import Link from "next/link";
+import { SITE_AUTHOR, SITE_NAME, SITE_URL } from "@/lib/site";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Muhammad Illiyin Ashraf — AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, and autonomous agent systems.",
-  alternates: { canonical: "https://www.milliyin.dev/about" },
+    `${SITE_AUTHOR} - AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, and autonomous agent systems.`,
+  alternates: { canonical: `${SITE_URL}/about` },
   openGraph: {
-    title: "About | milliyin",
+    title: `About | ${SITE_NAME}`,
     description:
-      "Muhammad Illiyin Ashraf — AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, and autonomous agent systems.",
-    url: "https://www.milliyin.dev/about",
+      `${SITE_AUTHOR} - AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, and autonomous agent systems.`,
+    url: `${SITE_URL}/about`,
     images: [{ url: "/syakir.webp", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "About | milliyin",
+    title: `About | ${SITE_NAME}`,
     description:
-      "Muhammad Illiyin Ashraf — AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, and autonomous agent systems.",
+      `${SITE_AUTHOR} - AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, and autonomous agent systems.`,
     images: ["/syakir.webp"],
   },
 };
@@ -62,9 +63,9 @@ export default function AboutPage() {
         />
         <div className="pt-1">
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-            AI/ML Engineer — NLP, Computer Vision, Generative AI
+            AI/ML Engineer - NLP, Computer Vision, Generative AI
           </h1>
-          <p className="text-muted mt-1">Muhammad Illiyin Ashraf · Pakistan</p>
+          <p className="text-muted mt-1">Muhammad Illiyin Ashraf - Pakistan</p>
         </div>
       </div>
 
@@ -72,13 +73,13 @@ export default function AboutPage() {
         <p>
           I&apos;m an AI/ML engineer based in Pakistan, focused on building
           real-world machine learning systems that solve concrete problems. My
-          work spans the full stack — from training models and fine-tuning
+          work spans the full stack - from training models and fine-tuning
           foundation models to deploying production APIs and building the
           interfaces that make them usable.
         </p>
         <p>
           I got into machine learning because I wanted to understand how things
-          actually work — not just call an API, but build and train the thing
+          actually work - not just call an API, but build and train the thing
           myself. That curiosity led me through NLP classifiers, computer vision
           pipelines, generative AI with LoRA adapters, and eventually to
           autonomous AI agent systems built on the Model Context Protocol.
@@ -87,7 +88,7 @@ export default function AboutPage() {
           Most of my recent work has been at the intersection of AI and systems
           design: building agents that can govern themselves on-chain, marketplaces
           where AI agents compete for tasks, and secure architectures for serving
-          models without leaking weights. I care about the whole pipeline — not
+          models without leaking weights. I care about the whole pipeline - not
           just model accuracy, but reliability, security, and the experience of
           using the thing.
         </p>
@@ -103,7 +104,7 @@ export default function AboutPage() {
         <p>
           I build because working systems teach you things that reading never
           can. Every project on this site started with a question I couldn&apos;t
-          answer by studying — so I built the answer instead. The N+1 database
+          answer by studying - so I built the answer instead. The N+1 database
           bug that slowed TaskHive to 2.2 seconds. The stop-out timing issue that
           made Sentinel exit correct trades. The MCP transport layer that took
           four commits to get right. These are the things I actually learned.

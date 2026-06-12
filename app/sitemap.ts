@@ -1,32 +1,31 @@
 import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/posts";
-
-const BASE = "https://www.milliyin.dev";
+import { SITE_URL } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts();
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: BASE,
+      url: SITE_URL,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: `${BASE}/about`,
+      url: `${SITE_URL}/about`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${BASE}/posts`,
+      url: `${SITE_URL}/posts`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
-      url: `${BASE}/projects`,
+      url: `${SITE_URL}/projects`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
@@ -34,7 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const postRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${BASE}/posts/${post.slug}`,
+    url: `${SITE_URL}/posts/${post.slug}`,
     lastModified: new Date(post.date),
     changeFrequency: "monthly",
     priority: 0.7,
