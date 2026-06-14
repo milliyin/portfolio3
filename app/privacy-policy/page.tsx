@@ -1,11 +1,25 @@
 import type { Metadata } from "next";
-import { SITE_URL } from "@/lib/site";
+import { SITE_NAME, SITE_OG_IMAGE, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
     "How milliyin.dev handles your data - no tracking, no cookies, no personal info collected.",
   alternates: { canonical: `${SITE_URL}/privacy-policy` },
+  openGraph: {
+    title: `Privacy Policy | ${SITE_NAME}`,
+    description:
+      "How milliyin.dev handles your data - no tracking, no cookies, no personal info collected.",
+    url: `${SITE_URL}/privacy-policy`,
+    images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Privacy Policy | ${SITE_NAME}`,
+    description:
+      "How milliyin.dev handles your data - no tracking, no cookies, no personal info collected.",
+    images: [SITE_OG_IMAGE],
+  },
 };
 
 export default function PrivacyPolicyPage() {

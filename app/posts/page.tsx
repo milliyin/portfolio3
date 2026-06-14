@@ -1,5 +1,6 @@
 import { getAllPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
+import { jsonLd } from "@/lib/jsonld";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import type { Metadata } from "next";
 
@@ -26,6 +27,14 @@ export const metadata: Metadata = {
 
 export default function PostsPage() {
   const posts = getAllPosts();
+  const collectionLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Posts",
+    url: `${SITE_URL}/posts`,
+    description:
+      "Writing on AI/ML engineering, Python, developer tools, and building real-world machine learning systems.",
+  };
 
   const byYear = posts.reduce<Record<string, typeof posts>>((acc, post) => {
     const year = post.date.slice(0, 4);
@@ -38,6 +47,10 @@ export default function PostsPage() {
 
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(collectionLd) }}
+      />
       <h1 className="text-2xl font-semibold tracking-tight mb-8">Posts</h1>
       {years.map((year) => (
         <section key={year} className="mb-10">

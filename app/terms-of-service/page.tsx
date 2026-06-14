@@ -1,11 +1,25 @@
 import type { Metadata } from "next";
-import { SITE_URL } from "@/lib/site";
+import { SITE_NAME, SITE_OG_IMAGE, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
     "How you can use milliyin.dev - content license, code samples, and liability.",
   alternates: { canonical: `${SITE_URL}/terms-of-service` },
+  openGraph: {
+    title: `Terms of Service | ${SITE_NAME}`,
+    description:
+      "How you can use milliyin.dev - content license, code samples, and liability.",
+    url: `${SITE_URL}/terms-of-service`,
+    images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Terms of Service | ${SITE_NAME}`,
+    description:
+      "How you can use milliyin.dev - content license, code samples, and liability.",
+    images: [SITE_OG_IMAGE],
+  },
 };
 
 export default function TermsPage() {

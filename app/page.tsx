@@ -3,7 +3,15 @@ import Image from "next/image";
 import { getAllPosts } from "@/lib/posts";
 import { projects } from "@/content/projects";
 import { jsonLd } from "@/lib/jsonld";
-import { SITE_AUTHOR, SITE_URL } from "@/lib/site";
+import {
+  SITE_AUTHOR,
+  SITE_DESCRIPTION,
+  SITE_LOGO,
+  SITE_NAME,
+  SITE_OG_IMAGE,
+  SITE_SAME_AS,
+  SITE_URL,
+} from "@/lib/site";
 import PostCard from "@/components/PostCard";
 import ProjectCard from "@/components/ProjectCard";
 import type { Metadata } from "next";
@@ -13,6 +21,21 @@ export const metadata: Metadata = {
   description:
     "Build NLP classifiers, computer vision systems, generative AI pipelines, and autonomous agents. Freelance AI engineer specializing in production ML systems.",
   alternates: { canonical: SITE_URL },
+  openGraph: {
+    title: "AI/ML Engineer Building Real-World Solutions",
+    description:
+      "Build NLP classifiers, computer vision systems, generative AI pipelines, and autonomous agents. Freelance AI engineer specializing in production ML systems.",
+    url: SITE_URL,
+    type: "website",
+    images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: SITE_NAME }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI/ML Engineer Building Real-World Solutions",
+    description:
+      "Build NLP classifiers, computer vision systems, generative AI pipelines, and autonomous agents. Freelance AI engineer specializing in production ML systems.",
+    images: [SITE_OG_IMAGE],
+  },
 };
 
 const TECH_BADGES = [
@@ -31,12 +54,26 @@ const PERSON_LD = {
   name: SITE_AUTHOR,
   url: SITE_URL,
   jobTitle: "AI/ML Engineer",
-  description:
-    "Developer & AI Engineer from Pakistan. NLP, computer vision, generative AI, agentic systems.",
-  sameAs: [
-    "https://github.com/milliyin",
-    "https://www.linkedin.com/in/illiyin",
-  ],
+  description: SITE_DESCRIPTION,
+  image: `${SITE_URL}/ava.jpg`,
+  sameAs: SITE_SAME_AS,
+};
+
+const WEBSITE_LD = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+  description: SITE_DESCRIPTION,
+};
+
+const ORGANIZATION_LD = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  url: SITE_URL,
+  logo: SITE_LOGO,
+  sameAs: SITE_SAME_AS,
 };
 
 export default function HomePage() {
@@ -49,6 +86,14 @@ export default function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(PERSON_LD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(WEBSITE_LD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(ORGANIZATION_LD) }}
       />
 
       <section className="pt-6 pb-14">
@@ -126,7 +171,7 @@ export default function HomePage() {
             href="/posts"
             className="text-xs text-accent hover:text-accent-hover transition-colors"
           >
-            All posts -&gt;
+            {"All posts ->"}
           </Link>
         </div>
         <div>
@@ -152,7 +197,7 @@ export default function HomePage() {
             href="/projects"
             className="text-xs text-accent hover:text-accent-hover transition-colors"
           >
-            All projects -&gt;
+            {"All projects ->"}
           </Link>
         </div>
         <div className="flex flex-col gap-3">

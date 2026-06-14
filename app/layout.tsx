@@ -5,7 +5,13 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ThemeProvider from "@/components/ThemeProvider";
-import { SITE_AUTHOR, SITE_NAME, SITE_URL } from "@/lib/site";
+import {
+  SITE_AUTHOR,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_OG_IMAGE,
+  SITE_URL,
+} from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -24,24 +30,21 @@ export const metadata: Metadata = {
     default: `${SITE_NAME} - AI Engineer & Developer`,
     template: `%s | ${SITE_NAME}`,
   },
-  description:
-    `${SITE_AUTHOR} - AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, agentic systems.`,
+  description: SITE_DESCRIPTION,
   openGraph: {
     title: `${SITE_NAME} - AI Engineer & Developer`,
-    description:
-      `${SITE_AUTHOR} - AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, agentic systems.`,
+    description: SITE_DESCRIPTION,
     url: SITE_URL,
     siteName: SITE_NAME,
-    images: [{ url: "/syakir.webp", width: 1200, height: 630, alt: SITE_NAME }],
+    images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: SITE_NAME }],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: `${SITE_NAME} - AI Engineer & Developer`,
-    description:
-      `${SITE_AUTHOR} - AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, agentic systems.`,
-    images: ["/syakir.webp"],
+    description: SITE_DESCRIPTION,
+    images: [SITE_OG_IMAGE],
   },
   robots: {
     index: true,
@@ -49,6 +52,8 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
+      "max-snippet": -1,
+      "max-video-preview": -1,
       "max-image-preview": "large",
     },
   },

@@ -38,7 +38,7 @@ export default function ProjectCard({
               rel="noopener noreferrer"
               className="text-muted hover:text-foreground transition-colors"
             >
-              Demo ↗
+              {"Demo ->"}
             </a>
           )}
           {githubUrl && (
@@ -48,7 +48,7 @@ export default function ProjectCard({
               rel="noopener noreferrer"
               className="text-muted hover:text-foreground transition-colors"
             >
-              GitHub ↗
+              {"GitHub ->"}
             </a>
           )}
         </div>

@@ -1,7 +1,13 @@
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { jsonLd } from "@/lib/jsonld";
-import { SITE_AUTHOR, SITE_URL } from "@/lib/site";
+import {
+  SITE_AUTHOR,
+  SITE_LOGO,
+  SITE_NAME,
+  SITE_OG_IMAGE,
+  SITE_URL,
+} from "@/lib/site";
 import MDXContent from "@/components/MDXContent";
 import TagPill from "@/components/TagPill";
 import type { Metadata } from "next";
@@ -25,15 +31,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: post.title,
       description: post.description,
       url: `${SITE_URL}/posts/${slug}`,
-      images: [{ url: "/syakir.webp", width: 1200, height: 630 }],
+      images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630 }],
       type: "article",
       publishedTime: post.date,
+      authors: [SITE_AUTHOR],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
-      images: ["/syakir.webp"],
+      images: [SITE_OG_IMAGE],
     },
   };
 }
@@ -48,7 +55,10 @@ export default async function PostPage({ params }: Props) {
     "@type": "Article",
     headline: post.title,
     description: post.description,
+    image: [SITE_OG_IMAGE],
     datePublished: post.date,
+    dateModified: post.date,
+    mainEntityOfPage: `${SITE_URL}/posts/${slug}`,
     url: `${SITE_URL}/posts/${slug}`,
     author: {
       "@type": "Person",
@@ -56,9 +66,13 @@ export default async function PostPage({ params }: Props) {
       url: SITE_URL,
     },
     publisher: {
-      "@type": "Person",
-      name: SITE_AUTHOR,
+      "@type": "Organization",
+      name: SITE_NAME,
       url: SITE_URL,
+      logo: {
+        "@type": "ImageObject",
+        url: SITE_LOGO,
+      },
     },
   };
 

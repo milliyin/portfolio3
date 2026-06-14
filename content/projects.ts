@@ -57,7 +57,7 @@ export const projects: Project[] = [
     title: "Sorting Algorithms Visualization",
     tags: ["DSA", "C++"],
     description:
-      "Interactive data structure visualizer for Bubble, Selection, Insert, Quick, and Merge sort — built in C++ with sound effects.",
+      "Interactive data structure visualizer for Bubble, Selection, Insert, Quick, and Merge sort - built in C++ with sound effects.",
     articleUrl: null,
     demoUrl: "https://github.com/milliyin/sorting-algorithms-visualization-dsa",
     githubUrl:
