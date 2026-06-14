@@ -9,6 +9,15 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: "Can I run this Hugging Face model?",
+    tags: ["Astro", "Hugging Face", "WebGPU", "Hardware Detection"],
+    description:
+      "Browser-based compatibility checker that detects device hardware, fetches Hugging Face model metadata, estimates VRAM and RAM needs, and tells you whether a local run looks great, tight, or too heavy.",
+    articleUrl: null,
+    demoUrl: "https://canirunaimodel.vercel.app/",
+    githubUrl: "https://github.com/milliyin/canirunaimodel",
+  },
+  {
     title: "TaskHive",
     tags: ["AI Agents", "Next.js", "MCP", "PostgreSQL"],
     description:
