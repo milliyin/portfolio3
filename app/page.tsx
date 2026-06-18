@@ -6,6 +6,7 @@ import { jsonLd } from "@/lib/jsonld";
 import {
   SITE_AUTHOR,
   SITE_DESCRIPTION,
+  SITE_EMAIL,
   SITE_LOGO,
   SITE_NAME,
   SITE_OG_IMAGE,
@@ -17,23 +18,23 @@ import ProjectCard from "@/components/ProjectCard";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "AI/ML Engineer Building Real-World Solutions",
+  title: "Freelance AI Engineer Building Real-World AI Systems",
   description:
-    "Build NLP classifiers, computer vision systems, generative AI pipelines, and autonomous agents. Freelance AI engineer specializing in production ML systems.",
+    "Freelance AI engineer Muhammad Illiyin Ashraf builds production NLP systems, computer vision apps, generative AI workflows, and autonomous agent platforms for startups and founders.",
   alternates: { canonical: SITE_URL },
   openGraph: {
-    title: "AI/ML Engineer Building Real-World Solutions",
+    title: "Freelance AI Engineer Building Real-World AI Systems",
     description:
-      "Build NLP classifiers, computer vision systems, generative AI pipelines, and autonomous agents. Freelance AI engineer specializing in production ML systems.",
+      "Freelance AI engineer Muhammad Illiyin Ashraf builds production NLP systems, computer vision apps, generative AI workflows, and autonomous agent platforms for startups and founders.",
     url: SITE_URL,
     type: "website",
     images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: SITE_NAME }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI/ML Engineer Building Real-World Solutions",
+    title: "Freelance AI Engineer Building Real-World AI Systems",
     description:
-      "Build NLP classifiers, computer vision systems, generative AI pipelines, and autonomous agents. Freelance AI engineer specializing in production ML systems.",
+      "Freelance AI engineer Muhammad Illiyin Ashraf builds production NLP systems, computer vision apps, generative AI workflows, and autonomous agent platforms for startups and founders.",
     images: [SITE_OG_IMAGE],
   },
 };
@@ -67,13 +68,17 @@ const WEBSITE_LD = {
   description: SITE_DESCRIPTION,
 };
 
-const ORGANIZATION_LD = {
+const SERVICE_LD = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  name: SITE_NAME,
+  "@type": "ProfessionalService",
+  name: `${SITE_AUTHOR} AI Engineering`,
   url: SITE_URL,
+  image: SITE_OG_IMAGE,
+  description: SITE_DESCRIPTION,
   logo: SITE_LOGO,
   sameAs: SITE_SAME_AS,
+  email: SITE_EMAIL,
+  areaServed: "Worldwide",
 };
 
 export default function HomePage() {
@@ -93,7 +98,7 @@ export default function HomePage() {
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: jsonLd(ORGANIZATION_LD) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(SERVICE_LD) }}
       />
 
       <section className="pt-6 pb-14">
@@ -108,7 +113,7 @@ export default function HomePage() {
           />
           <div>
             <h1 className="text-xl font-semibold tracking-tight text-foreground">
-              AI/ML Engineer Building Real-World Solutions
+              Freelance AI Engineer Building Real-World AI Systems
             </h1>
             <p className="text-muted text-sm mt-0.5">
               Muhammad Illiyin Ashraf - Pakistan
@@ -117,9 +122,10 @@ export default function HomePage() {
         </div>
 
         <p className="text-foreground/90 leading-relaxed mb-5 max-w-150">
-          I build real-world ML solutions - NLP classifiers, computer vision
-          systems, generative AI pipelines, and autonomous agents with MCP.
-          Open for freelance.
+          I build production AI features for startups and founders: NLP
+          classifiers, computer vision systems, generative AI pipelines, secure
+          inference backends, and autonomous agents with MCP. Open for freelance
+          projects worldwide.
         </p>
 
         <div className="flex flex-wrap gap-1.5 mb-7">
@@ -154,12 +160,48 @@ export default function HomePage() {
             LinkedIn
           </a>
           <Link
+            href="/services"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-md border border-border text-foreground hover:border-accent/50 hover:text-accent transition-colors"
+          >
+            AI Services
+          </Link>
+          <Link
             href="/cv"
             className="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-md bg-accent text-background font-medium hover:bg-accent-hover transition-colors"
           >
             Download CV
           </Link>
         </div>
+      </section>
+
+      <section className="mb-14 grid gap-4 md:grid-cols-3">
+        <article className="rounded-xl border border-border bg-card p-5">
+          <h2 className="text-base font-semibold tracking-tight">
+            NLP and language tooling
+          </h2>
+          <p className="mt-2 text-sm text-muted leading-relaxed">
+            Text classification, moderation, retrieval workflows, and production
+            pipelines for AI features that need to hold up outside a notebook.
+          </p>
+        </article>
+        <article className="rounded-xl border border-border bg-card p-5">
+          <h2 className="text-base font-semibold tracking-tight">
+            Computer vision and multimodal systems
+          </h2>
+          <p className="mt-2 text-sm text-muted leading-relaxed">
+            Image segmentation, captioning, visual understanding, and inference
+            services for products that need reliable vision capabilities.
+          </p>
+        </article>
+        <article className="rounded-xl border border-border bg-card p-5">
+          <h2 className="text-base font-semibold tracking-tight">
+            Agents, automation, and product builds
+          </h2>
+          <p className="mt-2 text-sm text-muted leading-relaxed">
+            Autonomous agent systems, MCP-based tooling, dashboards, APIs, and
+            full-stack product surfaces around modern AI workflows.
+          </p>
+        </article>
       </section>
 
       <section className="mb-14">

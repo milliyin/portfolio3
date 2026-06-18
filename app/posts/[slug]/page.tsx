@@ -76,6 +76,31 @@ export default async function PostPage({ params }: Props) {
     },
   };
 
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE_URL,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Posts",
+        item: `${SITE_URL}/posts`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: post.title,
+        item: `${SITE_URL}/posts/${slug}`,
+      },
+    ],
+  };
+
   const formatted = new Date(post.date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -86,7 +111,7 @@ export default async function PostPage({ params }: Props) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: jsonLd(articleLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd([articleLd, breadcrumbLd]) }}
       />
 
       <article>

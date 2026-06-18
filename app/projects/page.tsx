@@ -36,12 +36,20 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div>
+    <div className="space-y-8">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(collectionLd) }}
       />
-      <h1 className="text-2xl font-semibold tracking-tight mb-8">Projects</h1>
+      <div className="max-w-3xl space-y-3">
+        <h1 className="text-2xl font-semibold tracking-tight">Projects</h1>
+        <p className="text-sm text-muted leading-relaxed">
+          Selected AI engineering and full-stack builds across NLP, computer
+          vision, generative AI, autonomous agents, and developer tooling. Each
+          project page includes context, implementation notes, and links to demos,
+          source code, or deeper writeups when available.
+        </p>
+      </div>
       <div className="flex flex-col gap-3">
         {projects.map((project) => (
           <ProjectCard key={project.title} {...project} />

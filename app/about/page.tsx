@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { jsonLd } from "@/lib/jsonld";
 import { SITE_AUTHOR, SITE_NAME, SITE_URL } from "@/lib/site";
 import type { Metadata } from "next";
 
@@ -51,8 +52,33 @@ const AREAS = [
 ];
 
 export default function AboutPage() {
+  const personLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: SITE_AUTHOR,
+    url: `${SITE_URL}/about`,
+    jobTitle: "AI/ML Engineer",
+    worksFor: {
+      "@type": "Organization",
+      name: SITE_NAME,
+    },
+    alumniOf: "Independent builder",
+    knowsAbout: [
+      "NLP",
+      "computer vision",
+      "generative AI",
+      "autonomous AI agents",
+      "Next.js",
+      "Python",
+    ],
+  };
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(personLd) }}
+      />
       <div className="flex items-start gap-5 mb-8">
         <Image
           src="/ava.jpg"

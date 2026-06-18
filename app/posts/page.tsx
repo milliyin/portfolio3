@@ -46,12 +46,19 @@ export default function PostsPage() {
   const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
 
   return (
-    <div>
+    <div className="space-y-8">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(collectionLd) }}
       />
-      <h1 className="text-2xl font-semibold tracking-tight mb-8">Posts</h1>
+      <div className="max-w-3xl space-y-3">
+        <h1 className="text-2xl font-semibold tracking-tight">Posts</h1>
+        <p className="text-sm text-muted leading-relaxed">
+          Notes from building AI systems in practice: agent marketplaces, model
+          serving, training workflows, computer vision experiments, and the
+          engineering tradeoffs behind them.
+        </p>
+      </div>
       {years.map((year) => (
         <section key={year} className="mb-10">
           <h2 className="text-xs font-semibold text-muted uppercase tracking-widest mb-1">

@@ -2,6 +2,7 @@ import Link from "next/link";
 import TagPill from "./TagPill";
 
 type Props = {
+  slug: string;
   title: string;
   tags: string[];
   description: string;
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export default function ProjectCard({
+  slug,
   title,
   tags,
   description,
@@ -21,12 +23,25 @@ export default function ProjectCard({
   return (
     <div className="p-5 rounded-lg border border-border bg-card transition-colors hover:border-accent/20">
       <div className="flex items-start justify-between gap-4">
-        <h3 className="font-semibold text-foreground leading-snug">{title}</h3>
+        <h3 className="font-semibold text-foreground leading-snug">
+          <Link
+            href={`/projects/${slug}`}
+            className="hover:text-accent transition-colors"
+          >
+            {title}
+          </Link>
+        </h3>
         <div className="flex items-center gap-3 shrink-0 text-sm pt-0.5">
+          <Link
+            href={`/projects/${slug}`}
+            className="text-accent hover:text-accent-hover transition-colors"
+          >
+            Details
+          </Link>
           {articleUrl && (
             <Link
               href={articleUrl}
-              className="text-accent hover:text-accent-hover transition-colors"
+              className="text-muted hover:text-foreground transition-colors"
             >
               Article
             </Link>

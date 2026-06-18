@@ -8,8 +8,10 @@ import ThemeProvider from "@/components/ThemeProvider";
 import {
   SITE_AUTHOR,
   SITE_DESCRIPTION,
+  SITE_KEYWORDS,
   SITE_NAME,
   SITE_OG_IMAGE,
+  SITE_TITLE,
   SITE_URL,
 } from "@/lib/site";
 import "./globals.css";
@@ -27,12 +29,24 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} - AI Engineer & Developer`,
+    default: SITE_TITLE,
     template: `%s | ${SITE_NAME}`,
   },
+  applicationName: SITE_NAME,
   description: SITE_DESCRIPTION,
+  keywords: SITE_KEYWORDS,
+  category: "technology",
+  alternates: {
+    canonical: SITE_URL,
+  },
+  referrer: "origin-when-cross-origin",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
-    title: `${SITE_NAME} - AI Engineer & Developer`,
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     url: SITE_URL,
     siteName: SITE_NAME,
@@ -42,7 +56,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} - AI Engineer & Developer`,
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     images: [SITE_OG_IMAGE],
   },
@@ -59,6 +73,7 @@ export const metadata: Metadata = {
   },
   authors: [{ name: SITE_AUTHOR, url: SITE_URL }],
   creator: SITE_AUTHOR,
+  publisher: SITE_AUTHOR,
 };
 
 export default function RootLayout({

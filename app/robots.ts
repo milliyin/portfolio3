@@ -5,20 +5,10 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
-        userAgent: [
-          "Googlebot",
-          "Bingbot",
-          "Slurp",
-          "DuckDuckBot",
-          "Baiduspider",
-          "YandexBot",
-          "facebot",
-          "ia_archiver",
-        ],
+        userAgent: ["Googlebot", "Bingbot", "Slurp", "DuckDuckBot", "facebot"],
         allow: "/",
-        disallow: ["/api/", "/_next/"],
+        disallow: ["/api/"],
       },
-      // AI crawlers — allowed (content is public and training-friendly)
       {
         userAgent: [
           "GPTBot",
@@ -31,12 +21,12 @@ export default function robots(): MetadataRoute.Robots {
           "YouBot",
         ],
         allow: "/",
-        disallow: ["/api/", "/_next/"],
+        disallow: ["/api/"],
       },
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/_next/"],
+        disallow: ["/api/"],
       },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
