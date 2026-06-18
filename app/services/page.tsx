@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { jsonLd } from "@/lib/jsonld";
 import {
+  absoluteUrl,
   buildBreadcrumbJsonLd,
   buildPageMetadata,
   buildWebPageJsonLd,
@@ -46,6 +47,7 @@ export const metadata: Metadata = buildPageMetadata({
   title: SERVICES_TITLE,
   description: SERVICES_DESCRIPTION,
   path: "/services",
+  image: absoluteUrl("/services/opengraph-image"),
 });
 
 export default function ServicesPage() {

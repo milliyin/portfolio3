@@ -2,6 +2,7 @@ import { getAllPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import { jsonLd } from "@/lib/jsonld";
 import {
+  absoluteUrl,
   buildBreadcrumbJsonLd,
   buildPageMetadata,
   buildWebPageJsonLd,
@@ -16,6 +17,7 @@ export const metadata: Metadata = buildPageMetadata({
   title: POSTS_TITLE,
   description: POSTS_DESCRIPTION,
   path: "/posts",
+  image: absoluteUrl("/posts/opengraph-image"),
 });
 
 export default function PostsPage() {

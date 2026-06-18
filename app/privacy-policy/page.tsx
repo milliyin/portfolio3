@@ -1,5 +1,6 @@
 import { jsonLd } from "@/lib/jsonld";
 import {
+  absoluteUrl,
   buildBreadcrumbJsonLd,
   buildPageMetadata,
   buildWebPageJsonLd,
@@ -14,6 +15,7 @@ export const metadata: Metadata = buildPageMetadata({
   title: PRIVACY_TITLE,
   description: PRIVACY_DESCRIPTION,
   path: "/privacy-policy",
+  image: absoluteUrl("/privacy-policy/opengraph-image"),
 });
 
 export default function PrivacyPolicyPage() {

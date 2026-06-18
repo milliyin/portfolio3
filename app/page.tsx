@@ -4,6 +4,7 @@ import { getAllPosts } from "@/lib/posts";
 import { projects } from "@/content/projects";
 import { jsonLd } from "@/lib/jsonld";
 import {
+  absoluteUrl,
   buildBreadcrumbJsonLd,
   buildPageMetadata,
   buildWebPageJsonLd,
@@ -29,6 +30,7 @@ const HOME_DESCRIPTION =
 export const metadata: Metadata = buildPageMetadata({
   title: HOME_TITLE,
   description: HOME_DESCRIPTION,
+  image: absoluteUrl("/opengraph-image"),
 });
 
 const TECH_BADGES = [

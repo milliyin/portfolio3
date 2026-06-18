@@ -1,5 +1,6 @@
 import { jsonLd } from "@/lib/jsonld";
 import {
+  absoluteUrl,
   buildBreadcrumbJsonLd,
   buildPageMetadata,
   buildWebPageJsonLd,
@@ -14,6 +15,7 @@ export const metadata: Metadata = buildPageMetadata({
   title: TERMS_TITLE,
   description: TERMS_DESCRIPTION,
   path: "/terms-of-service",
+  image: absoluteUrl("/terms-of-service/opengraph-image"),
 });
 
 export default function TermsPage() {

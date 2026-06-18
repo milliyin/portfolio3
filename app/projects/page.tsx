@@ -2,6 +2,7 @@ import { projects } from "@/content/projects";
 import ProjectCard from "@/components/ProjectCard";
 import { jsonLd } from "@/lib/jsonld";
 import {
+  absoluteUrl,
   buildBreadcrumbJsonLd,
   buildPageMetadata,
   buildWebPageJsonLd,
@@ -16,6 +17,7 @@ export const metadata: Metadata = buildPageMetadata({
   title: PROJECTS_TITLE,
   description: PROJECTS_DESCRIPTION,
   path: "/projects",
+  image: absoluteUrl("/projects/opengraph-image"),
 });
 
 export default function ProjectsPage() {

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { jsonLd } from "@/lib/jsonld";
 import {
+  absoluteUrl,
   buildBreadcrumbJsonLd,
   buildPageMetadata,
   buildWebPageJsonLd,
@@ -16,6 +17,7 @@ export const metadata: Metadata = buildPageMetadata({
   title: ABOUT_TITLE,
   description: ABOUT_DESCRIPTION,
   path: "/about",
+  image: absoluteUrl("/about/opengraph-image"),
 });
 
 const TECHNOLOGIES = [
