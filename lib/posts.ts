@@ -6,6 +6,7 @@ export type Post = {
   slug: string;
   title: string;
   date: string;
+  updated: string;
   tags: string[];
   description: string;
   content: string;
@@ -28,11 +29,17 @@ export function getAllPosts(): Post[] {
       rawDate instanceof Date
         ? rawDate.toISOString().split("T")[0]
         : String(rawDate);
+    const rawUpdated = data.updated ?? data.date;
+    const updated =
+      rawUpdated instanceof Date
+        ? rawUpdated.toISOString().split("T")[0]
+        : String(rawUpdated);
 
     return {
       slug,
       title: String(data.title ?? ""),
       date,
+      updated,
       tags: Array.isArray(data.tags) ? (data.tags as string[]) : [],
       description: String(data.description ?? ""),
       content,
@@ -56,11 +63,17 @@ export function getPostBySlug(slug: string): Post | null {
     rawDate instanceof Date
       ? rawDate.toISOString().split("T")[0]
       : String(rawDate);
+  const rawUpdated = data.updated ?? data.date;
+  const updated =
+    rawUpdated instanceof Date
+      ? rawUpdated.toISOString().split("T")[0]
+      : String(rawUpdated);
 
   return {
     slug,
     title: String(data.title ?? ""),
     date,
+    updated,
     tags: Array.isArray(data.tags) ? (data.tags as string[]) : [],
     description: String(data.description ?? ""),
     content,

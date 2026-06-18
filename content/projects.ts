@@ -2,6 +2,7 @@ export type Project = {
   slug: string;
   title: string;
   headline: string;
+  updated: string;
   tags: string[];
   description: string;
   problem: string;
@@ -18,6 +19,7 @@ export const projects: Project[] = [
     slug: "can-i-run-this-hugging-face-model",
     title: "Can I run this Hugging Face model?",
     headline: "Hardware-aware AI model compatibility checker for local inference",
+    updated: "2026-06-18",
     tags: ["Astro", "Hugging Face", "WebGPU", "Hardware Detection"],
     description:
       "Browser-based compatibility checker that detects device hardware, fetches Hugging Face model metadata, estimates VRAM and RAM needs, and tells you whether a local run looks great, tight, or too heavy.",
@@ -36,6 +38,7 @@ export const projects: Project[] = [
     slug: "taskhive",
     title: "TaskHive",
     headline: "Open-source AI agent marketplace built with MCP and Next.js",
+    updated: "2026-06-18",
     tags: ["AI Agents", "Next.js", "MCP", "PostgreSQL"],
     description:
       "Open-source AI agent marketplace. Agents browse tasks, bid, submit deliverables, and earn credits. Built with Next.js, Neon PostgreSQL, and MCP.",
@@ -54,6 +57,7 @@ export const projects: Project[] = [
     slug: "flux-1-in-context-learning",
     title: "Flux 1 In Context Learning",
     headline: "Training workflow for FLUX pixel-art character consistency with LoRA",
+    updated: "2026-06-18",
     tags: ["Flux", "LoRA", "Diffusers", "AI"],
     description:
       "Training resources for Flux.1, focusing on in-context learning capabilities and creative fine-tuning.",
@@ -72,6 +76,7 @@ export const projects: Project[] = [
     slug: "fgsm-adversarial-attack",
     title: "FGSM Adversarial Attack",
     headline: "Adversarial machine learning demo deployed across local and cloud environments",
+    updated: "2026-06-18",
     tags: ["Python", "FastAPI", "AWS", "ML", "Security"],
     description:
       "Fast Gradient Sign Method adversarial attacks on ML models. Local and cloud deployment via AWS Lambda, Amplify, and ECR with a React frontend.",
@@ -90,6 +95,7 @@ export const projects: Project[] = [
     slug: "ai-caption-generator-server",
     title: "AI Caption Generator Server",
     headline: "Computer vision captioning backend for image-to-text generation",
+    updated: "2026-06-18",
     tags: ["Computer Vision", "Python", "Server"],
     description:
       "Computer vision server that generates captions for images using AI.",
@@ -108,6 +114,7 @@ export const projects: Project[] = [
     slug: "bad-to-improved-prompt-model",
     title: "Bad to Improved Prompt Model",
     headline: "Fine-tuned Llama workflow for upgrading weak image prompts",
+    updated: "2026-06-18",
     tags: ["Llama", "LLM", "Python"],
     description:
       "Fine-tuned Llama model that rewrites weak image generation prompts into detailed, high-quality ones.",
@@ -126,6 +133,7 @@ export const projects: Project[] = [
     slug: "sorting-algorithms-visualization",
     title: "Sorting Algorithms Visualization",
     headline: "Interactive C++ visualizer for classic sorting algorithms",
+    updated: "2026-06-18",
     tags: ["DSA", "C++"],
     description:
       "Interactive data structure visualizer for Bubble, Selection, Insert, Quick, and Merge sort built in C++ with sound effects.",
