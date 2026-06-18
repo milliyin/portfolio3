@@ -1,29 +1,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { jsonLd } from "@/lib/jsonld";
+import {
+  buildBreadcrumbJsonLd,
+  buildPageMetadata,
+  buildWebPageJsonLd,
+} from "@/lib/seo";
 import { SITE_AUTHOR, SITE_NAME, SITE_URL } from "@/lib/site";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "About",
-  description:
-    `${SITE_AUTHOR} - AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, and autonomous agent systems.`,
-  alternates: { canonical: `${SITE_URL}/about` },
-  openGraph: {
-    title: `About | ${SITE_NAME}`,
-    description:
-      `${SITE_AUTHOR} - AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, and autonomous agent systems.`,
-    url: `${SITE_URL}/about`,
-    images: [{ url: "/syakir.webp", width: 1200, height: 630 }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `About | ${SITE_NAME}`,
-    description:
-      `${SITE_AUTHOR} - AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, and autonomous agent systems.`,
-    images: ["/syakir.webp"],
-  },
-};
+const ABOUT_TITLE = "About";
+const ABOUT_DESCRIPTION = `${SITE_AUTHOR} - AI/ML Engineer from Pakistan. NLP, computer vision, generative AI, and autonomous agent systems.`;
+
+export const metadata: Metadata = buildPageMetadata({
+  title: ABOUT_TITLE,
+  description: ABOUT_DESCRIPTION,
+  path: "/about",
+});
 
 const TECHNOLOGIES = [
   "PyTorch",
@@ -52,6 +45,15 @@ const AREAS = [
 ];
 
 export default function AboutPage() {
+  const breadcrumbLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+  ]);
+  const webPageLd = buildWebPageJsonLd({
+    title: ABOUT_TITLE,
+    description: ABOUT_DESCRIPTION,
+    path: "/about",
+  });
   const personLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -78,6 +80,14 @@ export default function AboutPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(personLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(webPageLd) }}
       />
       <div className="flex items-start gap-5 mb-8">
         <Image

@@ -1,39 +1,40 @@
 import { getAllPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import { jsonLd } from "@/lib/jsonld";
-import { SITE_NAME, SITE_URL } from "@/lib/site";
+import {
+  buildBreadcrumbJsonLd,
+  buildPageMetadata,
+  buildWebPageJsonLd,
+} from "@/lib/seo";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Posts",
-  description:
-    "Writing on AI/ML engineering, Python, developer tools, and building real-world machine learning systems.",
-  alternates: { canonical: `${SITE_URL}/posts` },
-  openGraph: {
-    title: `Posts | ${SITE_NAME}`,
-    description:
-      "Writing on AI/ML engineering, Python, developer tools, and building real-world machine learning systems.",
-    url: `${SITE_URL}/posts`,
-    images: [{ url: "/syakir.webp", width: 1200, height: 630 }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `Posts | ${SITE_NAME}`,
-    description:
-      "Writing on AI/ML engineering, Python, developer tools, and building real-world machine learning systems.",
-    images: ["/syakir.webp"],
-  },
-};
+const POSTS_TITLE = "Posts";
+const POSTS_DESCRIPTION =
+  "Writing on AI/ML engineering, Python, developer tools, and building real-world machine learning systems.";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: POSTS_TITLE,
+  description: POSTS_DESCRIPTION,
+  path: "/posts",
+});
 
 export default function PostsPage() {
   const posts = getAllPosts();
+  const breadcrumbLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Posts", path: "/posts" },
+  ]);
+  const webPageLd = buildWebPageJsonLd({
+    title: POSTS_TITLE,
+    description: POSTS_DESCRIPTION,
+    path: "/posts",
+  });
   const collectionLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Posts",
-    url: `${SITE_URL}/posts`,
-    description:
-      "Writing on AI/ML engineering, Python, developer tools, and building real-world machine learning systems.",
+    name: POSTS_TITLE,
+    url: "https://www.milliyin.dev/posts",
+    description: POSTS_DESCRIPTION,
   };
 
   const byYear = posts.reduce<Record<string, typeof posts>>((acc, post) => {
@@ -50,6 +51,14 @@ export default function PostsPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(collectionLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(webPageLd) }}
       />
       <div className="max-w-3xl space-y-3">
         <h1 className="text-2xl font-semibold tracking-tight">Posts</h1>

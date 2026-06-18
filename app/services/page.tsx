@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { jsonLd } from "@/lib/jsonld";
 import {
+  buildBreadcrumbJsonLd,
+  buildPageMetadata,
+  buildWebPageJsonLd,
+} from "@/lib/seo";
+import {
   SITE_AUTHOR,
   SITE_DESCRIPTION,
   SITE_EMAIL,
@@ -33,46 +38,26 @@ const SERVICES = [
   },
 ];
 
-export const metadata: Metadata = {
-  title: "AI Engineering Services",
-  description:
-    "Freelance AI engineering services by Muhammad Illiyin Ashraf: AI MVPs, NLP systems, computer vision apps, generative AI workflows, and autonomous agent architecture.",
-  alternates: { canonical: `${SITE_URL}/services` },
-  openGraph: {
-    title: `AI Engineering Services | ${SITE_NAME}`,
-    description:
-      "Freelance AI engineering services by Muhammad Illiyin Ashraf: AI MVPs, NLP systems, computer vision apps, generative AI workflows, and autonomous agent architecture.",
-    url: `${SITE_URL}/services`,
-    images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: SITE_NAME }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `AI Engineering Services | ${SITE_NAME}`,
-    description:
-      "Freelance AI engineering services by Muhammad Illiyin Ashraf: AI MVPs, NLP systems, computer vision apps, generative AI workflows, and autonomous agent architecture.",
-    images: [SITE_OG_IMAGE],
-  },
-};
+const SERVICES_TITLE = "AI Engineering Services";
+const SERVICES_DESCRIPTION =
+  "Freelance AI engineering services by Muhammad Illiyin Ashraf: AI MVPs, NLP systems, computer vision apps, generative AI workflows, and autonomous agent architecture.";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: SERVICES_TITLE,
+  description: SERVICES_DESCRIPTION,
+  path: "/services",
+});
 
 export default function ServicesPage() {
-  const breadcrumbLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: SITE_URL,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Services",
-        item: `${SITE_URL}/services`,
-      },
-    ],
-  };
+  const breadcrumbLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Services", path: "/services" },
+  ]);
+  const webPageLd = buildWebPageJsonLd({
+    title: SERVICES_TITLE,
+    description: SERVICES_DESCRIPTION,
+    path: "/services",
+  });
 
   const serviceLd = {
     "@context": "https://schema.org",
@@ -105,6 +90,10 @@ export default function ServicesPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(serviceLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(webPageLd) }}
       />
 
       <div className="space-y-12">

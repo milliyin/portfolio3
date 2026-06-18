@@ -1,38 +1,39 @@
 import { projects } from "@/content/projects";
 import ProjectCard from "@/components/ProjectCard";
 import { jsonLd } from "@/lib/jsonld";
-import { SITE_AUTHOR, SITE_NAME, SITE_OG_IMAGE, SITE_URL } from "@/lib/site";
+import {
+  buildBreadcrumbJsonLd,
+  buildPageMetadata,
+  buildWebPageJsonLd,
+} from "@/lib/seo";
+import { SITE_AUTHOR } from "@/lib/site";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Projects",
-  description:
-    `Open-source and freelance projects by ${SITE_AUTHOR} - ML systems, AI agents, and full-stack apps.`,
-  alternates: { canonical: `${SITE_URL}/projects` },
-  openGraph: {
-    title: `Projects | ${SITE_NAME}`,
-    description:
-      `Open-source and freelance projects by ${SITE_AUTHOR} - ML systems, AI agents, and full-stack apps.`,
-    url: `${SITE_URL}/projects`,
-    images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630 }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `Projects | ${SITE_NAME}`,
-    description:
-      `Open-source and freelance projects by ${SITE_AUTHOR} - ML systems, AI agents, and full-stack apps.`,
-    images: [SITE_OG_IMAGE],
-  },
-};
+const PROJECTS_TITLE = "Projects";
+const PROJECTS_DESCRIPTION = `Open-source and freelance projects by ${SITE_AUTHOR} - ML systems, AI agents, and full-stack apps.`;
+
+export const metadata: Metadata = buildPageMetadata({
+  title: PROJECTS_TITLE,
+  description: PROJECTS_DESCRIPTION,
+  path: "/projects",
+});
 
 export default function ProjectsPage() {
+  const breadcrumbLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Projects", path: "/projects" },
+  ]);
+  const webPageLd = buildWebPageJsonLd({
+    title: PROJECTS_TITLE,
+    description: PROJECTS_DESCRIPTION,
+    path: "/projects",
+  });
   const collectionLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Projects",
-    url: `${SITE_URL}/projects`,
-    description:
-      `Open-source and freelance projects by ${SITE_AUTHOR} - ML systems, AI agents, and full-stack apps.`,
+    name: PROJECTS_TITLE,
+    url: "https://www.milliyin.dev/projects",
+    description: PROJECTS_DESCRIPTION,
   };
 
   return (
@@ -40,6 +41,14 @@ export default function ProjectsPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(collectionLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(webPageLd) }}
       />
       <div className="max-w-3xl space-y-3">
         <h1 className="text-2xl font-semibold tracking-tight">Projects</h1>

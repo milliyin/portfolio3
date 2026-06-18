@@ -4,6 +4,11 @@ import { getAllPosts } from "@/lib/posts";
 import { projects } from "@/content/projects";
 import { jsonLd } from "@/lib/jsonld";
 import {
+  buildBreadcrumbJsonLd,
+  buildPageMetadata,
+  buildWebPageJsonLd,
+} from "@/lib/seo";
+import {
   SITE_AUTHOR,
   SITE_DESCRIPTION,
   SITE_EMAIL,
@@ -17,27 +22,14 @@ import PostCard from "@/components/PostCard";
 import ProjectCard from "@/components/ProjectCard";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Freelance AI Engineer Building Real-World AI Systems",
-  description:
-    "Freelance AI engineer Muhammad Illiyin Ashraf builds production NLP systems, computer vision apps, generative AI workflows, and autonomous agent platforms for startups and founders.",
-  alternates: { canonical: SITE_URL },
-  openGraph: {
-    title: "Freelance AI Engineer Building Real-World AI Systems",
-    description:
-      "Freelance AI engineer Muhammad Illiyin Ashraf builds production NLP systems, computer vision apps, generative AI workflows, and autonomous agent platforms for startups and founders.",
-    url: SITE_URL,
-    type: "website",
-    images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: SITE_NAME }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Freelance AI Engineer Building Real-World AI Systems",
-    description:
-      "Freelance AI engineer Muhammad Illiyin Ashraf builds production NLP systems, computer vision apps, generative AI workflows, and autonomous agent platforms for startups and founders.",
-    images: [SITE_OG_IMAGE],
-  },
-};
+const HOME_TITLE = "Freelance AI Engineer Building Real-World AI Systems";
+const HOME_DESCRIPTION =
+  "Freelance AI engineer Muhammad Illiyin Ashraf builds production NLP systems, computer vision apps, generative AI workflows, and autonomous agent platforms for startups and founders.";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: HOME_TITLE,
+  description: HOME_DESCRIPTION,
+});
 
 const TECH_BADGES = [
   "PyTorch",
@@ -68,6 +60,11 @@ const WEBSITE_LD = {
   description: SITE_DESCRIPTION,
 };
 
+const HOMEPAGE_LD = buildWebPageJsonLd({
+  title: HOME_TITLE,
+  description: HOME_DESCRIPTION,
+});
+
 const SERVICE_LD = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
@@ -85,6 +82,7 @@ export default function HomePage() {
   const allPosts = getAllPosts();
   const recentPosts = allPosts.slice(0, 5);
   const featuredProjects = projects.slice(0, 3);
+  const breadcrumbLd = buildBreadcrumbJsonLd([{ name: "Home", path: "/" }]);
 
   return (
     <>
@@ -99,6 +97,14 @@ export default function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(SERVICE_LD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(HOMEPAGE_LD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbLd) }}
       />
 
       <section className="pt-6 pb-14">

@@ -2,7 +2,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProjectBySlug, projects } from "@/content/projects";
 import { jsonLd } from "@/lib/jsonld";
-import { SITE_AUTHOR, SITE_NAME, SITE_OG_IMAGE, SITE_URL } from "@/lib/site";
+import {
+  absoluteUrl,
+  buildBreadcrumbJsonLd,
+  buildPageMetadata,
+  buildWebPageJsonLd,
+} from "@/lib/seo";
+import { SITE_AUTHOR, SITE_NAME, SITE_URL } from "@/lib/site";
 import type { Metadata } from "next";
 
 type Props = {
@@ -21,26 +27,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {};
   }
 
-  return {
+  return buildPageMetadata({
     title: project.title,
     description: project.description,
-    alternates: {
-      canonical: `${SITE_URL}/projects/${project.slug}`,
-    },
-    openGraph: {
-      title: `${project.title} | ${SITE_NAME}`,
-      description: project.description,
-      url: `${SITE_URL}/projects/${project.slug}`,
-      type: "article",
-      images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: project.title }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${project.title} | ${SITE_NAME}`,
-      description: project.description,
-      images: [SITE_OG_IMAGE],
-    },
-  };
+    path: `/projects/${project.slug}`,
+    type: "article",
+    image: absoluteUrl(`/projects/${project.slug}/opengraph-image`),
+  });
 }
 
 export default async function ProjectDetailPage({ params }: Props) {
@@ -51,30 +44,16 @@ export default async function ProjectDetailPage({ params }: Props) {
     notFound();
   }
 
-  const breadcrumbLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: SITE_URL,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Projects",
-        item: `${SITE_URL}/projects`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: project.title,
-        item: `${SITE_URL}/projects/${project.slug}`,
-      },
-    ],
-  };
+  const breadcrumbLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Projects", path: "/projects" },
+    { name: project.title, path: `/projects/${project.slug}` },
+  ]);
+  const webPageLd = buildWebPageJsonLd({
+    title: project.title,
+    description: project.description,
+    path: `/projects/${project.slug}`,
+  });
 
   const projectLd = {
     "@context": "https://schema.org",
@@ -106,6 +85,10 @@ export default async function ProjectDetailPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd([breadcrumbLd, projectLd]) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(webPageLd) }}
       />
 
       <article className="space-y-10">

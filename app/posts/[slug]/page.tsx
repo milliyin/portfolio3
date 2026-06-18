@@ -2,6 +2,12 @@ import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { jsonLd } from "@/lib/jsonld";
 import {
+  absoluteUrl,
+  buildBreadcrumbJsonLd,
+  buildPageMetadata,
+  buildWebPageJsonLd,
+} from "@/lib/seo";
+import {
   SITE_AUTHOR,
   SITE_LOGO,
   SITE_NAME,
@@ -23,26 +29,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPostBySlug(slug);
   if (!post) return {};
 
-  return {
+  return buildPageMetadata({
     title: post.title,
     description: post.description,
-    alternates: { canonical: `${SITE_URL}/posts/${slug}` },
-    openGraph: {
-      title: post.title,
-      description: post.description,
-      url: `${SITE_URL}/posts/${slug}`,
-      images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630 }],
-      type: "article",
-      publishedTime: post.date,
-      authors: [SITE_AUTHOR],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.description,
-      images: [SITE_OG_IMAGE],
-    },
-  };
+    path: `/posts/${slug}`,
+    type: "article",
+    image: absoluteUrl(`/posts/${slug}/opengraph-image`),
+  });
 }
 
 export default async function PostPage({ params }: Props) {
@@ -76,30 +69,16 @@ export default async function PostPage({ params }: Props) {
     },
   };
 
-  const breadcrumbLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: SITE_URL,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Posts",
-        item: `${SITE_URL}/posts`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: post.title,
-        item: `${SITE_URL}/posts/${slug}`,
-      },
-    ],
-  };
+  const breadcrumbLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Posts", path: "/posts" },
+    { name: post.title, path: `/posts/${slug}` },
+  ]);
+  const webPageLd = buildWebPageJsonLd({
+    title: post.title,
+    description: post.description,
+    path: `/posts/${slug}`,
+  });
 
   const formatted = new Date(post.date).toLocaleDateString("en-US", {
     year: "numeric",
@@ -112,6 +91,10 @@ export default async function PostPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd([articleLd, breadcrumbLd]) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(webPageLd) }}
       />
 
       <article>

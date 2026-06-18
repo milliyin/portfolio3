@@ -1,30 +1,42 @@
+import { jsonLd } from "@/lib/jsonld";
+import {
+  buildBreadcrumbJsonLd,
+  buildPageMetadata,
+  buildWebPageJsonLd,
+} from "@/lib/seo";
 import type { Metadata } from "next";
-import { SITE_NAME, SITE_OG_IMAGE, SITE_URL } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description:
-    "How milliyin.dev handles your data - no tracking, no cookies, no personal info collected.",
-  alternates: { canonical: `${SITE_URL}/privacy-policy` },
-  openGraph: {
-    title: `Privacy Policy | ${SITE_NAME}`,
-    description:
-      "How milliyin.dev handles your data - no tracking, no cookies, no personal info collected.",
-    url: `${SITE_URL}/privacy-policy`,
-    images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630 }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `Privacy Policy | ${SITE_NAME}`,
-    description:
-      "How milliyin.dev handles your data - no tracking, no cookies, no personal info collected.",
-    images: [SITE_OG_IMAGE],
-  },
-};
+const PRIVACY_TITLE = "Privacy Policy";
+const PRIVACY_DESCRIPTION =
+  "How milliyin.dev handles your data - no tracking, no cookies, no personal info collected.";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: PRIVACY_TITLE,
+  description: PRIVACY_DESCRIPTION,
+  path: "/privacy-policy",
+});
 
 export default function PrivacyPolicyPage() {
+  const breadcrumbLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Privacy Policy", path: "/privacy-policy" },
+  ]);
+  const webPageLd = buildWebPageJsonLd({
+    title: PRIVACY_TITLE,
+    description: PRIVACY_DESCRIPTION,
+    path: "/privacy-policy",
+  });
+
   return (
     <div className="prose">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(webPageLd) }}
+      />
       <h1>Privacy Policy</h1>
       <p>
         <em>Last updated: May 2026</em>

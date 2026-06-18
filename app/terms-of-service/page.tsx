@@ -1,30 +1,42 @@
+import { jsonLd } from "@/lib/jsonld";
+import {
+  buildBreadcrumbJsonLd,
+  buildPageMetadata,
+  buildWebPageJsonLd,
+} from "@/lib/seo";
 import type { Metadata } from "next";
-import { SITE_NAME, SITE_OG_IMAGE, SITE_URL } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Terms of Service",
-  description:
-    "How you can use milliyin.dev - content license, code samples, and liability.",
-  alternates: { canonical: `${SITE_URL}/terms-of-service` },
-  openGraph: {
-    title: `Terms of Service | ${SITE_NAME}`,
-    description:
-      "How you can use milliyin.dev - content license, code samples, and liability.",
-    url: `${SITE_URL}/terms-of-service`,
-    images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630 }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `Terms of Service | ${SITE_NAME}`,
-    description:
-      "How you can use milliyin.dev - content license, code samples, and liability.",
-    images: [SITE_OG_IMAGE],
-  },
-};
+const TERMS_TITLE = "Terms of Service";
+const TERMS_DESCRIPTION =
+  "How you can use milliyin.dev - content license, code samples, and liability.";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: TERMS_TITLE,
+  description: TERMS_DESCRIPTION,
+  path: "/terms-of-service",
+});
 
 export default function TermsPage() {
+  const breadcrumbLd = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Terms of Service", path: "/terms-of-service" },
+  ]);
+  const webPageLd = buildWebPageJsonLd({
+    title: TERMS_TITLE,
+    description: TERMS_DESCRIPTION,
+    path: "/terms-of-service",
+  });
+
   return (
     <div className="prose">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(webPageLd) }}
+      />
       <h1>Terms of Service</h1>
       <p>
         <em>Last updated: May 2026</em>
