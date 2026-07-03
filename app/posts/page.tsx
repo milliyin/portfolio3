@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getAllPosts } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import { jsonLd } from "@/lib/jsonld";
@@ -68,6 +69,16 @@ export default function PostsPage() {
           Notes from building AI systems in practice: agent marketplaces, model
           serving, training workflows, computer vision experiments, and the
           engineering tradeoffs behind them.
+        </p>
+        <p className="text-sm text-muted leading-relaxed">
+          For project-level case studies and shipped demos, browse the{" "}
+          <Link
+            href="/projects"
+            className="text-accent hover:text-accent-hover transition-colors"
+          >
+            AI projects collection
+          </Link>
+          .
         </p>
       </div>
       {years.map((year) => (

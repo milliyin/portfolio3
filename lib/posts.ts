@@ -9,6 +9,7 @@ export type Post = {
   updated: string;
   tags: string[];
   description: string;
+  relatedProjectSlugs: string[];
   content: string;
 };
 
@@ -42,6 +43,9 @@ export function getAllPosts(): Post[] {
       updated,
       tags: Array.isArray(data.tags) ? (data.tags as string[]) : [],
       description: String(data.description ?? ""),
+      relatedProjectSlugs: Array.isArray(data.relatedProjectSlugs)
+        ? (data.relatedProjectSlugs as string[])
+        : [],
       content,
     };
   });
@@ -76,6 +80,9 @@ export function getPostBySlug(slug: string): Post | null {
     updated,
     tags: Array.isArray(data.tags) ? (data.tags as string[]) : [],
     description: String(data.description ?? ""),
+    relatedProjectSlugs: Array.isArray(data.relatedProjectSlugs)
+      ? (data.relatedProjectSlugs as string[])
+      : [],
     content,
   };
 }

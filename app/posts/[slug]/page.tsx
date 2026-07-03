@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getProjectBySlug } from "@/content/projects";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { jsonLd } from "@/lib/jsonld";
 import {
@@ -19,6 +21,11 @@ import TagPill from "@/components/TagPill";
 import type { Metadata } from "next";
 
 type Props = { params: Promise<{ slug: string }> };
+
+const RELATED_PROJECTS_BY_POST: Record<string, string[]> = {
+  "ai-agent-marketplace": ["taskhive"],
+  "flux-pixel-art-characters-lora": ["flux-1-in-context-learning"],
+};
 
 export async function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
@@ -42,6 +49,13 @@ export default async function PostPage({ params }: Props) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) notFound();
+  const relatedProjectSlugs = [
+    ...post.relatedProjectSlugs,
+    ...(RELATED_PROJECTS_BY_POST[slug] ?? []),
+  ];
+  const relatedProjects = Array.from(new Set(relatedProjectSlugs))
+    .map((projectSlug) => getProjectBySlug(projectSlug))
+    .filter((project) => project !== null);
 
   const articleLd = {
     "@context": "https://schema.org",
@@ -115,6 +129,46 @@ export default async function PostPage({ params }: Props) {
         </header>
 
         <MDXContent source={post.content} />
+
+        <section className="mt-12 rounded-xl border border-border bg-card p-5">
+          <p className="text-xs font-semibold text-muted uppercase tracking-[0.24em]">
+            Explore more
+          </p>
+          <h2 className="mt-2 text-lg font-semibold tracking-tight">
+            More AI project work behind this post
+          </h2>
+          <p className="mt-2 text-sm text-muted leading-relaxed">
+            If you want to see more shipped AI systems, browse the{" "}
+            <Link
+              href="/projects"
+              className="text-accent hover:text-accent-hover transition-colors"
+            >
+              full projects collection
+            </Link>
+            {relatedProjects.length > 0
+              ? " or jump into the related case study below."
+              : "."}
+          </p>
+
+          {relatedProjects.length > 0 && (
+            <div className="mt-4 grid gap-3 md:grid-cols-2">
+              {relatedProjects.map((project) => (
+                <Link
+                  key={project.slug}
+                  href={`/projects/${project.slug}`}
+                  className="rounded-lg border border-border p-4 transition-colors hover:border-accent/40"
+                >
+                  <p className="text-sm font-semibold text-foreground">
+                    {project.title}
+                  </p>
+                  <p className="mt-1 text-sm text-muted leading-relaxed">
+                    {project.headline}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          )}
+        </section>
       </article>
     </>
   );
