@@ -62,9 +62,9 @@ export default async function PostPage({ params }: Props) {
     "@type": "Article",
     headline: post.title,
     description: post.description,
-    image: [SITE_OG_IMAGE],
+    image: [absoluteUrl(`/posts/${slug}/opengraph-image`) || SITE_OG_IMAGE],
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.updated,
     mainEntityOfPage: `${SITE_URL}/posts/${slug}`,
     url: `${SITE_URL}/posts/${slug}`,
     author: {

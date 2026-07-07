@@ -50,6 +50,7 @@ export function buildPageMetadata({
       url,
       type,
       siteName: SITE_NAME,
+      locale: "en_US",
       images: [{ url: image, width: 1200, height: 630, alt: title }],
     },
     twitter: {
@@ -57,6 +58,7 @@ export function buildPageMetadata({
       title: `${title} | ${SITE_NAME}`,
       description,
       images: [image],
+      creator: "@milliyin",
     },
     authors: [{ name: SITE_AUTHOR, url: SITE_URL }],
   };
@@ -86,6 +88,11 @@ export function buildWebPageJsonLd({
     name: title,
     url: absoluteUrl(path),
     description,
+    isPartOf: {
+      "@type": "WebSite",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
     author: {
       "@type": "Person",
       name: SITE_AUTHOR,

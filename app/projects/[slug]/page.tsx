@@ -8,7 +8,7 @@ import {
   buildPageMetadata,
   buildWebPageJsonLd,
 } from "@/lib/seo";
-import { SITE_AUTHOR, SITE_NAME, SITE_URL } from "@/lib/site";
+import { SITE_AUTHOR, SITE_NAME, SITE_OG_IMAGE, SITE_URL } from "@/lib/site";
 import type { Metadata } from "next";
 
 type Props = {
@@ -59,8 +59,12 @@ export default async function ProjectDetailPage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "SoftwareSourceCode",
     name: project.title,
+    headline: project.headline,
     description: project.description,
     url: `${SITE_URL}/projects/${project.slug}`,
+    image: absoluteUrl(`/projects/${project.slug}/opengraph-image`) || SITE_OG_IMAGE,
+    dateModified: project.updated,
+    keywords: project.tags.join(", "),
     author: {
       "@type": "Person",
       name: SITE_AUTHOR,

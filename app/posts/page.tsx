@@ -39,6 +39,18 @@ export default function PostsPage() {
     url: "https://www.milliyin.dev/posts",
     description: POSTS_DESCRIPTION,
   };
+  const itemListLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "AI engineering posts by Muhammad Illiyin Ashraf",
+    itemListElement: posts.map((post, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: `https://www.milliyin.dev/posts/${post.slug}`,
+      name: post.title,
+      description: post.description,
+    })),
+  };
 
   const byYear = posts.reduce<Record<string, typeof posts>>((acc, post) => {
     const year = post.date.slice(0, 4);
@@ -54,6 +66,10 @@ export default function PostsPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd(collectionLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(itemListLd) }}
       />
       <script
         type="application/ld+json"

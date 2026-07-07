@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: SITE_URL,
   },
-  referrer: "origin-when-cross-origin",
+  referrer: "strict-origin-when-cross-origin",
   formatDetection: {
     email: false,
     address: false,
@@ -74,6 +74,14 @@ export const metadata: Metadata = {
   authors: [{ name: SITE_AUTHOR, url: SITE_URL }],
   creator: SITE_AUTHOR,
   publisher: SITE_AUTHOR,
+};
+
+export const viewport: Viewport = {
+  colorScheme: "dark light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f5f5f4" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
 };
 
 export default function RootLayout({
