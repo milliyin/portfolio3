@@ -15,6 +15,21 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+type ProjectLink = {
+  label: string;
+  href: string;
+  external: boolean;
+  primary: boolean;
+};
+
+function formatDate(date: string) {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+
 export async function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
 }
@@ -84,6 +99,33 @@ export default async function ProjectDetailPage({ params }: Props) {
     },
   };
 
+  const links: ProjectLink[] = [
+    project.demoUrl
+      ? {
+          label: "Live demo",
+          href: project.demoUrl,
+          external: true,
+          primary: true,
+        }
+      : null,
+    project.githubUrl
+      ? {
+          label: "Source code",
+          href: project.githubUrl,
+          external: true,
+          primary: false,
+        }
+      : null,
+    project.articleUrl
+      ? {
+          label: "Related article",
+          href: project.articleUrl,
+          external: false,
+          primary: false,
+        }
+      : null,
+  ].filter((link): link is ProjectLink => link !== null);
+
   return (
     <>
       <script
@@ -95,102 +137,206 @@ export default async function ProjectDetailPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: jsonLd(webPageLd) }}
       />
 
-      <article className="space-y-10">
-        <header className="space-y-4">
+      <article className="space-y-8">
+        <header className="space-y-5 border-b border-border/70 pb-8">
           <Link
             href="/projects"
-            className="text-sm text-accent hover:text-accent-hover transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-accent transition-colors hover:text-accent-hover"
           >
+            <span aria-hidden="true">{"<-"}</span>
             Back to projects
           </Link>
+
           <div className="space-y-3">
-            <p className="text-xs font-semibold text-muted uppercase tracking-[0.24em]">
-              Project case study
-            </p>
-            <h1 className="text-3xl font-semibold tracking-tight text-foreground">
+            <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-muted">
+              <span>Project</span>
+              <span className="h-1 w-1 rounded-full bg-border" />
+              <span>Updated {formatDate(project.updated)}</span>
+              <span className="h-1 w-1 rounded-full bg-border" />
+              <span>{project.stack.length} tools</span>
+            </div>
+            <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
               {project.title}
             </h1>
-            <p className="text-base text-foreground/90 leading-relaxed max-w-3xl">
+            <p className="max-w-3xl text-lg leading-relaxed text-foreground/85">
               {project.headline}
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="px-2.5 py-1 text-xs rounded-md bg-tag-bg text-tag-text border border-border font-mono"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-          <div className="flex flex-wrap gap-3">
-            {project.demoUrl && (
-              <a
-                href={project.demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-md bg-accent text-background font-medium hover:bg-accent-hover transition-colors"
-              >
-                Live demo
-              </a>
-            )}
-            {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-md border border-border text-foreground hover:border-accent/50 hover:text-accent transition-colors"
-              >
-                View source
-              </a>
-            )}
-            {project.articleUrl && (
-              <Link
-                href={project.articleUrl}
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-md border border-border text-foreground hover:border-accent/50 hover:text-accent transition-colors"
-              >
-                Read related article
-              </Link>
-            )}
-          </div>
         </header>
 
-        <section className="grid gap-4 md:grid-cols-3">
-          <div className="rounded-xl border border-border bg-card p-5 md:col-span-3">
-            <p className="text-sm text-muted leading-relaxed">{project.description}</p>
-          </div>
-          <div className="rounded-xl border border-border p-5">
-            <h2 className="text-lg font-semibold">Problem</h2>
-            <p className="mt-2 text-sm text-muted leading-relaxed">{project.problem}</p>
-          </div>
-          <div className="rounded-xl border border-border p-5">
-            <h2 className="text-lg font-semibold">Solution</h2>
-            <p className="mt-2 text-sm text-muted leading-relaxed">{project.solution}</p>
-          </div>
-          <div className="rounded-xl border border-border p-5">
-            <h2 className="text-lg font-semibold">Impact</h2>
-            <p className="mt-2 text-sm text-muted leading-relaxed">{project.impact}</p>
-          </div>
-        </section>
+        <div className="grid gap-6 xl:grid-cols-[minmax(0,1.6fr)_22rem] xl:items-start">
+          <div className="space-y-6">
+            <section className="rounded-2xl border border-border bg-card/80 p-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
+                Overview
+              </p>
+              <p className="mt-4 max-w-4xl text-base leading-8 text-foreground/85">
+                {project.description}
+              </p>
+            </section>
 
-        <section className="max-w-3xl">
-          <h2 className="text-xl font-semibold tracking-tight mb-4">
-            Stack and implementation notes
-          </h2>
-          <div className="prose">
-            <p>
-              This project combines product thinking with technical implementation.
-              The goal was not only to prove the underlying model or workflow, but
-              to shape it into something understandable and usable for real people.
-            </p>
-            <p>
-              Technologies used here include {project.stack.join(", ")}. The stack
-              was chosen to keep the delivery practical while still leaving room for
-              experimentation, iteration, and deployment.
-            </p>
+            <section className="grid gap-4 md:grid-cols-3">
+              <article className="rounded-2xl border border-border bg-card p-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
+                  Problem
+                </p>
+                <p className="mt-3 text-sm leading-7 text-foreground/80">
+                  {project.problem}
+                </p>
+              </article>
+              <article className="rounded-2xl border border-border bg-card p-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
+                  Solution
+                </p>
+                <p className="mt-3 text-sm leading-7 text-foreground/80">
+                  {project.solution}
+                </p>
+              </article>
+              <article className="rounded-2xl border border-border bg-card p-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
+                  Impact
+                </p>
+                <p className="mt-3 text-sm leading-7 text-foreground/80">
+                  {project.impact}
+                </p>
+              </article>
+            </section>
+
+            <section className="rounded-2xl border border-border bg-card p-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
+                Stack
+              </p>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+                Built with a practical stack
+              </h2>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {project.stack.map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-border bg-background/60 px-3 py-1.5 text-sm text-foreground/80"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+              <div className="prose mt-6 max-w-none">
+                <p>
+                  The stack here was chosen to keep the build practical while still
+                  leaving room for iteration, deployment, and future changes.
+                </p>
+                <p>
+                  I care less about trendy tooling and more about picking the
+                  combination that makes the system understandable, maintainable,
+                  and useful once it is actually in someone&apos;s hands.
+                </p>
+              </div>
+            </section>
+
+            {project.articleUrl && (
+              <section className="rounded-2xl border border-border bg-card p-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
+                  More context
+                </p>
+                <h2 className="mt-2 text-xl font-semibold tracking-tight">
+                  Want the longer build story?
+                </h2>
+                <p className="mt-3 max-w-3xl text-sm leading-7 text-foreground/80">
+                  This project also has a related post with more detail on the build
+                  process, tradeoffs, and what changed while shipping it.
+                </p>
+                <div className="mt-5">
+                  <Link
+                    href={project.articleUrl}
+                    className="inline-flex items-center gap-2 rounded-md border border-border px-4 py-2 text-sm text-foreground transition-colors hover:border-accent/50 hover:text-accent"
+                  >
+                    Read the full article
+                  </Link>
+                </div>
+              </section>
+            )}
           </div>
-        </section>
+
+          <aside className="space-y-4 xl:sticky xl:top-24">
+            <section className="rounded-2xl border border-border bg-card p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
+                Links
+              </p>
+              <div className="mt-4 flex flex-col gap-3">
+                {links.map((link) =>
+                  link.external ? (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={
+                        link.primary
+                          ? "inline-flex items-center justify-between rounded-md bg-accent px-4 py-3 text-sm font-medium text-background transition-colors hover:bg-accent-hover"
+                          : "inline-flex items-center justify-between rounded-md border border-border px-4 py-3 text-sm text-foreground transition-colors hover:border-accent/50 hover:text-accent"
+                      }
+                    >
+                      <span>{link.label}</span>
+                      <span aria-hidden="true">{"->"}</span>
+                    </a>
+                  ) : (
+                    <Link
+                      key={link.label}
+                      href={link.href}
+                      className="inline-flex items-center justify-between rounded-md border border-border px-4 py-3 text-sm text-foreground transition-colors hover:border-accent/50 hover:text-accent"
+                    >
+                      <span>{link.label}</span>
+                      <span aria-hidden="true">{"->"}</span>
+                    </Link>
+                  )
+                )}
+              </div>
+            </section>
+
+            <section className="rounded-2xl border border-border bg-card p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
+                Snapshot
+              </p>
+              <div className="mt-4 space-y-3 text-sm">
+                <div className="flex items-start justify-between gap-4 border-b border-border/70 pb-3">
+                  <span className="text-muted">Updated</span>
+                  <span className="text-right text-foreground">
+                    {formatDate(project.updated)}
+                  </span>
+                </div>
+                <div className="flex items-start justify-between gap-4 border-b border-border/70 pb-3">
+                  <span className="text-muted">Primary stack</span>
+                  <span className="text-right text-foreground">{project.stack[0]}</span>
+                </div>
+                <div className="flex items-start justify-between gap-4 border-b border-border/70 pb-3">
+                  <span className="text-muted">Tags</span>
+                  <span className="text-right text-foreground">{project.tags.length}</span>
+                </div>
+                <div className="flex items-start justify-between gap-4">
+                  <span className="text-muted">Related write-up</span>
+                  <span className="text-right text-foreground">
+                    {project.articleUrl ? "Available" : "None"}
+                  </span>
+                </div>
+              </div>
+            </section>
+
+            <section className="rounded-2xl border border-border bg-card p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
+                Tags
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-border bg-background/60 px-3 py-1 text-xs font-mono text-tag-text"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </section>
+          </aside>
+        </div>
       </article>
     </>
   );
