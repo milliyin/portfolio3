@@ -33,31 +33,21 @@ export const metadata: Metadata = buildPageMetadata({
   image: absoluteUrl("/opengraph-image"),
 });
 
-const TECH_BADGES = [
-  "PyTorch",
-  "TensorFlow",
-  "HuggingFace",
-  "Next.js",
-  "MCP",
-  "Gradio",
-  "AWS",
-];
-
 const TRUST_POINTS = [
   {
-    label: "Case studies",
+    label: "Project depth",
     value: `${projects.length}+`,
-    detail: "Project pages with problem, solution, impact, and links.",
+    detail: "Each project page explains the problem, the approach, and the shipped result.",
   },
   {
-    label: "Technical writing",
+    label: "Writing",
     value: `${getAllPosts().length}+`,
-    detail: "Build notes that show how I think through systems work.",
+    detail: "Posts that break down what worked, what broke, and what changed.",
   },
   {
-    label: "Focus",
-    value: "End-to-end",
-    detail: "Model logic, APIs, product UX, and deployment in one flow.",
+    label: "Work style",
+    value: "Practical",
+    detail: "I care about usable systems, not just model demos or benchmark wins.",
   },
 ];
 
@@ -200,17 +190,6 @@ export default function HomePage() {
           projects worldwide.
         </p>
 
-        <div className="flex flex-wrap gap-1.5 mb-7">
-          {TECH_BADGES.map((badge) => (
-            <span
-              key={badge}
-              className="px-2.5 py-1 text-xs rounded-md bg-tag-bg text-tag-text border border-border font-mono"
-            >
-              {badge}
-            </span>
-          ))}
-        </div>
-
         <div className="flex flex-wrap gap-3">
           <a
             href="https://github.com/milliyin"
@@ -279,16 +258,13 @@ export default function HomePage() {
       <section className="mb-14 rounded-2xl border border-border bg-card/70 p-6 md:p-8">
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <p className="text-xs font-semibold text-muted uppercase tracking-[0.24em]">
-              Proof and fit
-            </p>
             <h2 className="mt-2 text-2xl font-semibold tracking-tight">
-              Enough substance to evaluate, not just a polished landing page
+              The best way to judge the work is to look at the work
             </h2>
             <p className="mt-3 text-sm text-muted leading-relaxed">
-              If you are deciding whether I can build the kind of system you need,
-              the strongest signal is the shipped work itself: case studies, write-ups,
-              demos, and implementation notes that show how I approach real constraints.
+              If you want to know how I build, the clearest answer is in the
+              projects and posts. I try to show the technical decisions, the
+              tradeoffs, and what actually shipped.
             </p>
           </div>
           <Link
@@ -399,11 +375,8 @@ export default function HomePage() {
 
       <section className="mb-14">
         <div className="max-w-3xl">
-          <p className="text-xs font-semibold text-muted uppercase tracking-[0.24em]">
-            FAQ
-          </p>
           <h2 className="mt-2 text-2xl font-semibold tracking-tight">
-            Common questions before starting
+            A few useful things to know
           </h2>
         </div>
         <div className="mt-6 divide-y divide-border rounded-2xl border border-border bg-card">

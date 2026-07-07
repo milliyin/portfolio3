@@ -42,7 +42,6 @@ const AREAS = [
   "Computer vision (segmentation, style classification, captioning)",
   "Generative AI (LoRA fine-tuning, FLUX, Stable Diffusion)",
   "Autonomous AI agents with MCP tool surfaces",
-  "DeFi & on-chain agent governance (ERC-8004)",
   "Full-stack web apps (Next.js, TypeScript, PostgreSQL)",
 ];
 
@@ -110,25 +109,25 @@ export default function AboutPage() {
       <div className="prose">
         <p>
           I&apos;m an AI/ML engineer based in Pakistan, focused on building
-          real-world machine learning systems that solve concrete problems. My
-          work spans the full stack - from training models and fine-tuning
-          foundation models to deploying production APIs and building the
-          interfaces that make them usable.
+          machine learning systems that solve real problems. My work usually
+          spans the full stack, from training and fine-tuning models to shipping
+          APIs and building the interfaces around them.
         </p>
         <p>
-          I got into machine learning because I wanted to understand how things
-          actually work - not just call an API, but build and train the thing
-          myself. That curiosity led me through NLP classifiers, computer vision
-          pipelines, generative AI with LoRA adapters, and eventually to
-          autonomous AI agent systems built on the Model Context Protocol.
+          I got into machine learning because I wanted to understand how these
+          systems actually work. I did not want to stop at calling an API. I
+          wanted to build the model, train it, test it, and understand where it
+          breaks. That curiosity led me through NLP classifiers, computer vision
+          pipelines, generative AI workflows with LoRA adapters, and eventually
+          into autonomous agent systems built with the Model Context Protocol.
         </p>
         <p>
-          Most of my recent work has been at the intersection of AI and systems
-          design: building agents that can govern themselves on-chain, marketplaces
-          where AI agents compete for tasks, and secure architectures for serving
-          models without leaking weights. I care about the whole pipeline - not
-          just model accuracy, but reliability, security, and the experience of
-          using the thing.
+          Most of my recent work sits at the intersection of AI and systems
+          design. I like building things that have to work end to end, whether
+          that means agent marketplaces, secure model-serving flows, or tools
+          that make complex ML systems easier to use. I care about the whole
+          pipeline, including reliability, security, and the experience of using
+          the final product.
         </p>
 
         <h2>What I Work On</h2>
@@ -138,15 +137,6 @@ export default function AboutPage() {
           ))}
         </ul>
 
-        <h2>Why I Build</h2>
-        <p>
-          I build because working systems teach you things that reading never
-          can. Every project on this site started with a question I couldn&apos;t
-          answer by studying - so I built the answer instead. The N+1 database
-          bug that slowed TaskHive to 2.2 seconds. The stop-out timing issue that
-          made Sentinel exit correct trades. The MCP transport layer that took
-          four commits to get right. These are the things I actually learned.
-        </p>
         <p>
           I&apos;m open to freelance work, especially projects involving ML
           systems, AI agent architecture, or full-stack development with a
