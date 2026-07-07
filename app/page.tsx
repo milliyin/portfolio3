@@ -43,6 +43,70 @@ const TECH_BADGES = [
   "AWS",
 ];
 
+const TRUST_POINTS = [
+  {
+    label: "Case studies",
+    value: `${projects.length}+`,
+    detail: "Project pages with problem, solution, impact, and links.",
+  },
+  {
+    label: "Technical writing",
+    value: `${getAllPosts().length}+`,
+    detail: "Build notes that show how I think through systems work.",
+  },
+  {
+    label: "Focus",
+    value: "End-to-end",
+    detail: "Model logic, APIs, product UX, and deployment in one flow.",
+  },
+];
+
+const WORKFLOW_STEPS = [
+  {
+    title: "Scope the real bottleneck",
+    description:
+      "We figure out whether the hard part is data quality, model behavior, latency, product UX, or infrastructure before building the wrong thing.",
+  },
+  {
+    title: "Ship the working system",
+    description:
+      "I build the usable version, not just a notebook demo: backend, model flow, interface, and the glue between them.",
+  },
+  {
+    title: "Harden what matters",
+    description:
+      "Once it works, we tighten reliability, deployment, observability, and the rough edges that make AI features break in production.",
+  },
+];
+
+const FAQS = [
+  {
+    question: "What kinds of projects are the best fit?",
+    answer:
+      "Startups, founders, and small teams that need an AI feature or product surface shipped properly. Good fits include NLP pipelines, model-serving backends, computer vision features, agent workflows, and internal AI tools.",
+  },
+  {
+    question: "Do you only work on machine learning models?",
+    answer:
+      "No. Most useful AI work needs more than the model itself, so I also build APIs, dashboards, integrations, evaluation flows, and the frontend or developer tooling around the system.",
+  },
+  {
+    question: "Can you help with an MVP instead of a long engagement?",
+    answer:
+      "Yes. I can work on focused MVP builds, technical spikes, or a specific AI feature that needs to move from idea to something testable quickly.",
+  },
+  {
+    question: "Do you work remotely with international clients?",
+    answer:
+      "Yes. I am based in Pakistan and work remotely with clients worldwide.",
+  },
+  {
+    question: "Where should I start if I want to evaluate fit?",
+    answer:
+      "The best place to start is the projects page. It shows the kinds of systems I build and how I usually explain the problem, implementation, and outcome.",
+  },
+];
+
 const PERSON_LD = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -212,6 +276,82 @@ export default function HomePage() {
         </article>
       </section>
 
+      <section className="mb-14 rounded-2xl border border-border bg-card/70 p-6 md:p-8">
+        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold text-muted uppercase tracking-[0.24em]">
+              Proof and fit
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+              Enough substance to evaluate, not just a polished landing page
+            </h2>
+            <p className="mt-3 text-sm text-muted leading-relaxed">
+              If you are deciding whether I can build the kind of system you need,
+              the strongest signal is the shipped work itself: case studies, write-ups,
+              demos, and implementation notes that show how I approach real constraints.
+            </p>
+          </div>
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 self-start rounded-md bg-accent px-4 py-2 text-sm font-medium text-background transition-colors hover:bg-accent-hover"
+          >
+            Browse project proof
+          </Link>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-3">
+          {TRUST_POINTS.map((point) => (
+            <article
+              key={point.label}
+              className="rounded-xl border border-border bg-background/40 p-5"
+            >
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
+                {point.label}
+              </p>
+              <p className="mt-3 text-2xl font-semibold tracking-tight">
+                {point.value}
+              </p>
+              <p className="mt-2 text-sm text-muted leading-relaxed">
+                {point.detail}
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="mb-14">
+        <div className="max-w-3xl">
+          <p className="text-xs font-semibold text-muted uppercase tracking-[0.24em]">
+            How I work
+          </p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+            The work is usually a systems problem, not just a model problem
+          </h2>
+          <p className="mt-3 text-sm text-muted leading-relaxed">
+            That is why my process starts with the bottleneck and ends with a usable,
+            deployable product surface. The point is to ship something people can
+            actually use, inspect, and iterate on.
+          </p>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-3">
+          {WORKFLOW_STEPS.map((step, index) => (
+            <article
+              key={step.title}
+              className="rounded-xl border border-border bg-card p-5"
+            >
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">
+                0{index + 1}
+              </p>
+              <h3 className="mt-3 text-lg font-semibold tracking-tight">
+                {step.title}
+              </h3>
+              <p className="mt-2 text-sm text-muted leading-relaxed">
+                {step.description}
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="mb-14">
         <div className="flex items-center justify-between mb-1">
           <h2 className="text-sm font-semibold text-muted uppercase tracking-widest">
@@ -254,6 +394,64 @@ export default function HomePage() {
           {featuredProjects.map((project) => (
             <ProjectCard key={project.title} {...project} />
           ))}
+        </div>
+      </section>
+
+      <section className="mb-14">
+        <div className="max-w-3xl">
+          <p className="text-xs font-semibold text-muted uppercase tracking-[0.24em]">
+            FAQ
+          </p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+            Common questions before starting
+          </h2>
+        </div>
+        <div className="mt-6 divide-y divide-border rounded-2xl border border-border bg-card">
+          {FAQS.map((faq) => (
+            <details
+              key={faq.question}
+              className="group px-5 py-1"
+            >
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-sm font-medium text-foreground marker:content-none">
+                <span>{faq.question}</span>
+                <span className="text-lg text-muted transition-transform group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <p className="pb-4 pr-8 text-sm leading-relaxed text-muted">
+                {faq.answer}
+              </p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-[1.75rem] border border-border bg-card px-6 py-12 text-center md:px-10 md:py-16">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted">
+          Let&apos;s work together
+        </p>
+        <h2 className="mx-auto mt-3 max-w-3xl text-3xl font-semibold tracking-tight md:text-4xl">
+          If you already know the AI feature you want, we can turn it into a
+          working system.
+        </h2>
+        <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-muted md:text-base">
+          Whether you need an MVP, a production-facing backend, a model workflow,
+          or a product surface around it, I can help scope it, build it, and make
+          it usable.
+        </p>
+        <div className="mt-7 flex flex-wrap justify-center gap-3">
+          <a
+            href={`mailto:${SITE_EMAIL}?subject=AI%20Project%20Inquiry`}
+            className="inline-flex items-center gap-2 rounded-md bg-accent px-5 py-3 text-sm font-medium text-background transition-colors hover:bg-accent-hover"
+          >
+            Start a project
+          </a>
+          <Link
+            href="/services"
+            className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-3 text-sm text-foreground transition-colors hover:border-accent/50 hover:text-accent"
+          >
+            See services
+          </Link>
         </div>
       </section>
     </>
