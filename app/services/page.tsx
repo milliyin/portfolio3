@@ -18,14 +18,9 @@ import type { Metadata } from "next";
 
 const SERVICES = [
   {
-    name: "AI MVPs and internal tools",
+    name: "Generative AI workflows",
     description:
-      "From idea to working product: agent workflows, copilots, chat interfaces, dashboards, and automation tools for startups and solo founders.",
-  },
-  {
-    name: "NLP and text classification systems",
-    description:
-      "Spam detection, moderation, labeling pipelines, document understanding, retrieval workflows, and evaluation loops for language-heavy products.",
+      "Prompt systems, LoRA fine-tuning, model integration, secure inference APIs, and production-ready flows around modern image and language models.",
   },
   {
     name: "Computer vision applications",
@@ -33,9 +28,32 @@ const SERVICES = [
       "Segmentation, captioning, image understanding, and model serving for products that need practical vision features, not just demos.",
   },
   {
-    name: "Generative AI workflows",
+    name: "NLP and text classification systems",
     description:
-      "Prompt systems, LoRA fine-tuning, model integration, secure inference APIs, and production-ready user flows around modern image and language models.",
+      "Spam detection, moderation, labeling pipelines, document understanding, retrieval workflows, and evaluation loops for language-heavy products.",
+  },
+  {
+    name: "AI MVPs and internal tools",
+    description:
+      "From idea to working product: agent workflows, copilots, chat interfaces, dashboards, and automation tools for startups and solo founders.",
+  },
+];
+
+const WORKFLOW_STEPS = [
+  {
+    title: "Scope the real bottleneck",
+    description:
+      "We figure out whether the hard part is data quality, model behavior, latency, product UX, or infrastructure before building the wrong thing.",
+  },
+  {
+    title: "Ship the working system",
+    description:
+      "I build the usable version, not just a notebook demo: backend, model flow, interface, and the glue between them.",
+  },
+  {
+    title: "Harden what matters",
+    description:
+      "Once it works, we tighten reliability, deployment, observability, and the rough edges that make AI features break in production.",
   },
 ];
 
@@ -155,7 +173,7 @@ export default function ServicesPage() {
             <h2 className="text-lg font-semibold">How I work</h2>
             <p className="mt-2 text-sm text-muted leading-relaxed">
               I scope fast, validate assumptions early, and build around the real
-              bottleneck: data quality, inference reliability, tooling ergonomics,
+              bottleneck: data quality, inference reliability, developer tooling,
               or delivery speed.
             </p>
           </article>
@@ -163,7 +181,7 @@ export default function ServicesPage() {
             <h2 className="text-lg font-semibold">Best fit</h2>
             <p className="mt-2 text-sm text-muted leading-relaxed">
               Teams that need a technical builder who can move from model logic to
-              APIs, UI, infrastructure, and product decisions without losing the plot.
+              APIs, interfaces, infrastructure, and product decisions without losing the plot.
             </p>
           </article>
           <article className="rounded-xl border border-border p-5">
@@ -173,6 +191,40 @@ export default function ServicesPage() {
               features where speed matters but quality still has to hold up.
             </p>
           </article>
+        </section>
+
+        <section>
+          <div className="max-w-3xl">
+            <p className="text-xs font-semibold text-muted uppercase tracking-[0.24em]">
+              How I work
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+              The work is usually a systems problem, not just a model problem
+            </h2>
+            <p className="mt-3 text-sm text-muted leading-relaxed">
+              That is why my process starts with the bottleneck and ends with a usable,
+              deployable product surface. The point is to ship something people can
+              actually use, inspect, and iterate on.
+            </p>
+          </div>
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
+            {WORKFLOW_STEPS.map((step, index) => (
+              <article
+                key={step.title}
+                className="rounded-xl border border-border bg-card p-5"
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">
+                  0{index + 1}
+                </p>
+                <h3 className="mt-3 text-lg font-semibold tracking-tight">
+                  {step.title}
+                </h3>
+                <p className="mt-2 text-sm text-muted leading-relaxed">
+                  {step.description}
+                </p>
+              </article>
+            ))}
+          </div>
         </section>
 
         <section className="max-w-3xl">
@@ -185,7 +237,7 @@ export default function ServicesPage() {
               model-serving flows, prompt-improvement systems, adversarial ML demos,
               FLUX training experiments, and browser-first tooling for local AI
               model compatibility. That mix is useful when a project sits between
-              machine learning, product UX, and engineering constraints.
+              machine learning, product requirements, and engineering constraints.
             </p>
             <p>
               If you need someone who can reason about ML systems end to end and
