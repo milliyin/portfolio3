@@ -440,12 +440,12 @@ export default function HomePage() {
           it usable.
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
-          <a
-            href={`mailto:${SITE_EMAIL}?subject=AI%20Project%20Inquiry`}
+          <Link
+            href="/services#contact"
             className="inline-flex items-center gap-2 rounded-md bg-accent px-5 py-3 text-sm font-medium text-background transition-colors hover:bg-accent-hover"
           >
             Start a project
-          </a>
+          </Link>
           <Link
             href="/services"
             className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-3 text-sm text-foreground transition-colors hover:border-accent/50 hover:text-accent"

@@ -194,6 +194,48 @@ export default function ServicesPage() {
             </p>
           </div>
         </section>
+
+        <section
+          id="contact"
+          className="rounded-2xl border border-border bg-card px-6 py-8 scroll-mt-24"
+        >
+          <p className="text-xs font-semibold text-muted uppercase tracking-[0.24em]">
+            Start a project
+          </p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+            Tell me what you are building
+          </h2>
+          <p className="mt-3 max-w-2xl text-sm text-muted leading-relaxed">
+            If you already have a product idea, feature brief, or rough problem
+            statement, send it over. A short email with the goal, timeline, and
+            current stack is enough to start the conversation.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a
+              href={`mailto:${SITE_EMAIL}?subject=AI%20Project%20Inquiry`}
+              className="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2 text-sm font-medium text-background transition-colors hover:bg-accent-hover"
+            >
+              Email me
+            </a>
+            <a
+              href="https://www.linkedin.com/in/illiyin"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-md border border-border px-4 py-2 text-sm text-foreground transition-colors hover:border-accent/50 hover:text-accent"
+            >
+              Message on LinkedIn
+            </a>
+          </div>
+          <p className="mt-4 text-sm text-muted">
+            Direct email:{" "}
+            <a
+              href={`mailto:${SITE_EMAIL}`}
+              className="text-accent hover:text-accent-hover"
+            >
+              {SITE_EMAIL}
+            </a>
+          </p>
+        </section>
       </div>
     </>
   );
