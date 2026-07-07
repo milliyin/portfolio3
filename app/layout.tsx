@@ -86,6 +86,13 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
+      <head>
+        <link
+          rel="preconnect"
+          href="https://static.cloudflareinsights.com"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="min-h-screen flex flex-col bg-background text-foreground antialiased">
         <ThemeProvider>
           <Nav />
