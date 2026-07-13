@@ -16,29 +16,6 @@ import {
 } from "@/lib/site";
 import type { Metadata } from "next";
 
-const SERVICES = [
-  {
-    name: "Generative AI workflows",
-    description:
-      "Prompt systems, LoRA fine-tuning, model integration, secure inference APIs, and production-ready flows around modern image and language models.",
-  },
-  {
-    name: "Computer vision applications",
-    description:
-      "Segmentation, captioning, image understanding, and model serving for products that need practical vision features, not just demos.",
-  },
-  {
-    name: "NLP and text classification systems",
-    description:
-      "Spam detection, moderation, labeling pipelines, document understanding, retrieval workflows, and evaluation loops for language-heavy products.",
-  },
-  {
-    name: "AI MVPs and internal tools",
-    description:
-      "From idea to working product: agent workflows, copilots, chat interfaces, dashboards, and automation tools for startups and solo founders.",
-  },
-];
-
 const WORKFLOW_STEPS = [
   {
     title: "Scope the real bottleneck",
@@ -144,27 +121,6 @@ export default function ServicesPage() {
             >
               View case studies
             </Link>
-          </div>
-        </section>
-
-        <section>
-          <h2 className="text-xl font-semibold tracking-tight mb-5">
-            What I can build
-          </h2>
-          <div className="grid gap-4 md:grid-cols-2">
-            {SERVICES.map((service) => (
-              <article
-                key={service.name}
-                className="rounded-xl border border-border bg-card p-5"
-              >
-                <h3 className="text-lg font-semibold text-foreground">
-                  {service.name}
-                </h3>
-                <p className="mt-2 text-sm text-muted leading-relaxed">
-                  {service.description}
-                </p>
-              </article>
-            ))}
           </div>
         </section>
 

@@ -30,7 +30,7 @@ export const projects: Project[] = [
     impact:
       "The result is a faster discovery flow for local AI users and a cleaner way to explain model requirements without making people decipher raw specs on their own.",
     stack: ["Astro", "TypeScript", "Web APIs", "Hugging Face metadata", "WebGPU heuristics"],
-    articleUrl: null,
+    articleUrl: "/posts/can-i-run-this-hugging-face-model",
     demoUrl: "https://canirunaimodel.vercel.app/",
     githubUrl: "https://github.com/milliyin/canirunaimodel",
   },

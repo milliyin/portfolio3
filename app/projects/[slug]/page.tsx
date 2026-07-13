@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProjectBySlug, projects } from "@/content/projects";
+import MDXContent from "@/components/MDXContent";
 import { jsonLd } from "@/lib/jsonld";
+import { getPostBySlug } from "@/lib/posts";
 import {
   absoluteUrl,
   buildBreadcrumbJsonLd,
@@ -125,6 +127,10 @@ export default async function ProjectDetailPage({ params }: Props) {
         }
       : null,
   ].filter((link): link is ProjectLink => link !== null);
+  const relatedPostSlug = project.articleUrl?.startsWith("/posts/")
+    ? project.articleUrl.replace("/posts/", "")
+    : null;
+  const relatedPost = relatedPostSlug ? getPostBySlug(relatedPostSlug) : null;
 
   return (
     <>
@@ -137,8 +143,8 @@ export default async function ProjectDetailPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: jsonLd(webPageLd) }}
       />
 
-      <article className="space-y-8">
-        <header className="space-y-5 border-b border-border/70 pb-8">
+      <article className="relative left-1/2 w-[min(100vw-2rem,1120px)] -translate-x-1/2 space-y-10">
+        <header className="space-y-6 border-b border-border/70 pb-8">
           <Link
             href="/projects"
             className="inline-flex items-center gap-2 text-sm text-accent transition-colors hover:text-accent-hover"
@@ -147,7 +153,8 @@ export default async function ProjectDetailPage({ params }: Props) {
             Back to projects
           </Link>
 
-          <div className="space-y-3">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-end">
+            <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-muted">
               <span>Project</span>
               <span className="h-1 w-1 rounded-full bg-border" />
@@ -161,39 +168,56 @@ export default async function ProjectDetailPage({ params }: Props) {
             <p className="max-w-3xl text-lg leading-relaxed text-foreground/85">
               {project.headline}
             </p>
+            </div>
+            <div className="rounded-lg border border-border bg-card p-4 font-mono text-xs">
+              <div className="flex items-center justify-between border-b border-border/70 pb-2">
+                <span className="text-muted">status</span>
+                <span className="text-accent">shipped</span>
+              </div>
+              <div className="flex items-center justify-between border-b border-border/70 py-2">
+                <span className="text-muted">primary</span>
+                <span>{project.stack[0]}</span>
+              </div>
+              <div className="flex items-center justify-between pt-2">
+                <span className="text-muted">writeup</span>
+                <span>{relatedPost ? "included" : "none"}</span>
+              </div>
+            </div>
           </div>
         </header>
 
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1.6fr)_22rem] xl:items-start">
+        <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_20rem] xl:items-start">
           <div className="space-y-6">
-            <section className="rounded-2xl border border-border bg-card/80 p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
-                Overview
-              </p>
-              <p className="mt-4 max-w-4xl text-base leading-8 text-foreground/85">
-                {project.description}
-              </p>
+            <section className="border-b border-border/70 pb-6">
+              <div className="grid gap-4 lg:grid-cols-[14rem_minmax(0,1fr)]">
+                <p className="font-mono text-xs uppercase tracking-[0.24em] text-muted">
+                  Overview
+                </p>
+                <p className="max-w-3xl text-base leading-8 text-foreground/85">
+                  {project.description}
+                </p>
+              </div>
             </section>
 
-            <section className="grid gap-4 md:grid-cols-3">
-              <article className="rounded-2xl border border-border bg-card p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
+            <section className="grid gap-4 lg:grid-cols-3">
+              <article className="rounded-lg border border-border bg-card p-5">
+                <p className="font-mono text-xs uppercase tracking-[0.24em] text-muted">
                   Problem
                 </p>
                 <p className="mt-3 text-sm leading-7 text-foreground/80">
                   {project.problem}
                 </p>
               </article>
-              <article className="rounded-2xl border border-border bg-card p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
+              <article className="rounded-lg border border-border bg-card p-5">
+                <p className="font-mono text-xs uppercase tracking-[0.24em] text-muted">
                   Solution
                 </p>
                 <p className="mt-3 text-sm leading-7 text-foreground/80">
                   {project.solution}
                 </p>
               </article>
-              <article className="rounded-2xl border border-border bg-card p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
+              <article className="rounded-lg border border-border bg-card p-5">
+                <p className="font-mono text-xs uppercase tracking-[0.24em] text-muted">
                   Impact
                 </p>
                 <p className="mt-3 text-sm leading-7 text-foreground/80">
@@ -202,63 +226,57 @@ export default async function ProjectDetailPage({ params }: Props) {
               </article>
             </section>
 
-            <section className="rounded-2xl border border-border bg-card p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
-                Stack
-              </p>
-              <h2 className="mt-2 text-2xl font-semibold tracking-tight">
-                Built with a practical stack
-              </h2>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {project.stack.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-border bg-background/60 px-3 py-1.5 text-sm text-foreground/80"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-              <div className="prose mt-6 max-w-none">
-                <p>
-                  The stack here was chosen to keep the build practical while still
-                  leaving room for iteration, deployment, and future changes.
-                </p>
-                <p>
-                  I care less about trendy tooling and more about picking the
-                  combination that makes the system understandable, maintainable,
-                  and useful once it is actually in someone&apos;s hands.
-                </p>
+            <section className="border-t border-border/70 pt-6">
+              <div className="grid gap-4 lg:grid-cols-[14rem_minmax(0,1fr)]">
+                <div>
+                  <p className="font-mono text-xs uppercase tracking-[0.24em] text-muted">
+                    Stack
+                  </p>
+                  <h2 className="mt-2 text-xl font-semibold tracking-tight">
+                    Built with a practical stack
+                  </h2>
+                </div>
+                <div>
+                  <div className="flex flex-wrap gap-2">
+                    {project.stack.map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full border border-border bg-card px-3 py-1.5 text-sm text-foreground/80"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="mt-5 max-w-3xl text-sm leading-7 text-foreground/80">
+                    The stack was chosen around the practical shape of the build:
+                    what needed to run in production, what needed to stay readable,
+                    and what made iteration faster.
+                  </p>
+                </div>
               </div>
             </section>
 
-            {project.articleUrl && (
-              <section className="rounded-2xl border border-border bg-card p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
-                  More context
-                </p>
-                <h2 className="mt-2 text-xl font-semibold tracking-tight">
-                  Want the longer build story?
-                </h2>
-                <p className="mt-3 max-w-3xl text-sm leading-7 text-foreground/80">
-                  This project also has a related post with more detail on the build
-                  process, tradeoffs, and what changed while shipping it.
-                </p>
-                <div className="mt-5">
-                  <Link
-                    href={project.articleUrl}
-                    className="inline-flex items-center gap-2 rounded-md border border-border px-4 py-2 text-sm text-foreground transition-colors hover:border-accent/50 hover:text-accent"
-                  >
-                    Read the full article
-                  </Link>
+            {relatedPost && (
+              <section className="border-t border-border/70 pt-10">
+                <div className="mb-8">
+                  <p className="font-mono text-xs uppercase tracking-[0.24em] text-muted">
+                    Full write-up
+                  </p>
+                  <h2 className="mt-2 max-w-4xl text-3xl font-semibold tracking-tight md:text-4xl">
+                    {relatedPost.title}
+                  </h2>
+                  <p className="mt-3 max-w-3xl text-sm leading-7 text-muted">
+                    {relatedPost.description}
+                  </p>
                 </div>
+                <MDXContent source={relatedPost.content} />
               </section>
             )}
           </div>
 
           <aside className="space-y-4 xl:sticky xl:top-24">
-            <section className="rounded-2xl border border-border bg-card p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
+            <section className="rounded-lg border border-border bg-card p-5">
+              <p className="font-mono text-xs uppercase tracking-[0.24em] text-muted">
                 Links
               </p>
               <div className="mt-4 flex flex-col gap-3">
@@ -292,8 +310,8 @@ export default async function ProjectDetailPage({ params }: Props) {
               </div>
             </section>
 
-            <section className="rounded-2xl border border-border bg-card p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
+            <section className="rounded-lg border border-border bg-card p-5">
+              <p className="font-mono text-xs uppercase tracking-[0.24em] text-muted">
                 Snapshot
               </p>
               <div className="mt-4 space-y-3 text-sm">
@@ -320,8 +338,8 @@ export default async function ProjectDetailPage({ params }: Props) {
               </div>
             </section>
 
-            <section className="rounded-2xl border border-border bg-card p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
+            <section className="rounded-lg border border-border bg-card p-5">
+              <p className="font-mono text-xs uppercase tracking-[0.24em] text-muted">
                 Tags
               </p>
               <div className="mt-4 flex flex-wrap gap-2">

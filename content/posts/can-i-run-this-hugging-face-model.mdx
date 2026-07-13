@@ -1,0 +1,89 @@
+---
+title: "I Built a Browser Tool That Checks If Your Machine Can Run a Hugging Face Model"
+date: "2026-06-18"
+updated: "2026-07-13"
+tags: ["Hugging Face", "Local AI", "WebGPU", "Astro"]
+description: "A build note for Can I Run This Hugging Face Model, a browser-first compatibility checker for local AI models."
+relatedProjectSlugs: ["can-i-run-this-hugging-face-model"]
+---
+
+## Why I Built It
+
+Trying local AI models should not start with guessing.
+
+People see a model on Hugging Face, read a few numbers, maybe check the parameter count, and still have no clear answer to the real question: can this run on my machine without wasting the next hour?
+
+That was the itch behind this project.
+
+I wanted a small browser tool where someone could paste or open a model, let the page inspect their hardware, and get a plain answer. Not a perfect benchmark. Just a useful first pass before downloading huge files.
+
+## What The Tool Checks
+
+The app looks at three things:
+
+- the model metadata from Hugging Face
+- the hardware information available in the browser
+- a set of memory estimates for common quantization levels
+
+The output is intentionally direct. It tells you whether a local run looks comfortable, tight, or probably too heavy. That matters because raw specs are easy to misread when you are comparing VRAM, RAM, quantization, architecture, and context length at the same time.
+
+## The Main Flow
+
+The user lands on a model page and sees the important stuff first:
+
+- model name and short description
+- model family, size, architecture, license, and context window
+- use cases like chat, code, or reasoning
+- quantization options with estimated VRAM and status
+- install command for Ollama when available
+- hardware panel based on the current device
+
+The table is the heart of it. A model may be impossible at full precision but usable as `Q4_K_M`, so the answer should not be a single yes or no. It needs to show the tradeoff.
+
+## Hardware Detection In The Browser
+
+Browser hardware detection is messy. You do not get everything. You get hints.
+
+For GPU information, WebGPU can expose an adapter name in supported browsers. For memory, the browser can expose approximate device memory. None of this should be treated like a lab-grade hardware scan, so the UI keeps the language cautious.
+
+That is why the app says things like "runs well", "decent", "tight fit", or "barely runs" instead of pretending to know exact real-world performance.
+
+## Estimating Model Memory
+
+The useful part is translating model size into something people can act on.
+
+A rough estimate needs to account for:
+
+- parameter count
+- quantization bits
+- base model memory
+- runtime overhead
+- recommended RAM headroom
+- whether the model is dense or uses another architecture pattern
+
+The estimates are not meant to replace testing. They are meant to prevent obviously bad downloads and make the first decision easier.
+
+## Why The UI Looks Like A Spec Sheet
+
+I wanted the page to feel closer to a hardware utility than a landing page.
+
+The model data sits on the left. The user's hardware, install command, specs, and Hugging Face stats sit on the right. That lets you compare the model against the machine without scrolling back and forth.
+
+The page is intentionally dense because the user is making a technical decision. This is not a marketing page. It is a tool for checking compatibility.
+
+## What I Would Improve Next
+
+The obvious next step is better device profiles.
+
+Right now the browser can only reveal so much. A stronger version could let users save hardware profiles, compare multiple GPUs, or crowdsource real performance reports for common models and quantization formats.
+
+I would also like to make model pages more explainable. For example, if a result says "tight fit", the page should explain exactly which constraint is causing that: VRAM, RAM, context length, quantization level, or architecture.
+
+## The Useful Lesson
+
+The big lesson was that AI tooling does not always need to be magical. Sometimes the best tool is the one that turns confusing numbers into a decision someone can actually make.
+
+That is what this project is trying to do.
+
+- Live app: [canirunaimodel.vercel.app](https://canirunaimodel.vercel.app/)
+- Source: [github.com/milliyin/canirunaimodel](https://github.com/milliyin/canirunaimodel)
